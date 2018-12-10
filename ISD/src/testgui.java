@@ -2,6 +2,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+
+import com.sun.prism.paint.Color;
+
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -10,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class testgui {
@@ -19,8 +25,8 @@ public class testgui {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   Statement stmt = null;
 	
@@ -190,6 +196,8 @@ public class testgui {
 		frame.getContentPane().add(past);
 		
 		Button Upcoming = new Button("Upcoming");
+		
+		
 		Upcoming.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -308,6 +316,11 @@ public class testgui {
 		});
 		btnUpdateActivity.setBounds(233, 477, 198, 25);
 		frame.getContentPane().add(btnUpdateActivity);
+
+		
+		
+		
+		 
 		
 	}
 }
