@@ -15,6 +15,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 public class addActivity {
@@ -22,12 +23,14 @@ public class addActivity {
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
+	   public int id =0;
 
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   PreparedStatement stmt = null;
+	   Statement stmt1 = null;
 
 	/**
 	 * Launch the application.
@@ -161,7 +164,41 @@ public class addActivity {
 				String description = editorPane_6.getText().toString();
 				String club = String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));
 				String dept = String.valueOf(comboBox_1.getItemAt(comboBox_1.getSelectedIndex()));
-				System.out.print(club + " "+ dept + " " + time + " " + venue + " " + exaud + " " + contact);
+				if(name.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"Name field is empty");  
+					return;
+				}
+				if(date.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"date field is empty");  
+					return;
+				}
+				if(time.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"time field is empty");  
+					return;
+				}
+				if(venue.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"venue field is empty");  
+					return;
+				}
+				if(exaud.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"expected Audience field is empty");  
+					return;
+				}
+				if(contact.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"contact field is empty");  
+					return;
+				}
+				if(description.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"description field is empty");  
+					return;
+				}
+				if(club.length() == 0) {
+					club = "";
+				}
+				if(dept.length() == 0) {
+					dept="";  
+				}
+				//System.out.print(club + " "+ dept + " " + time + " " + venue + " " + exaud + " " + contact);
 				try{
 				      //STEP 2: Register JDBC driver
 				      Class.forName("com.mysql.jdbc.Driver");
@@ -172,8 +209,17 @@ public class addActivity {
 
 				      //STEP 4: Execute a query
 				      System.out.println("Creating statement...");
+				      String s= "select Aid from Activity";
+				      stmt1 = conn.createStatement();
+				      ResultSet rs = stmt1.executeQuery(s);
+				      while(rs.next()) {
+				    	  id++;
+				      }
+				      
+				      System.out.println(id);
 				      String query = "insert into Activity (name,time,date,venue,description,Expected_Audience,Contact_Details,Club,Department)" + " values(?,?,?,?,?,?,?,?,?)";
 				      stmt = conn.prepareStatement(query);
+				      
 				      stmt.setString(1, name);
 				      stmt.setString(2, time);
 				      stmt.setString(3, date);
@@ -196,8 +242,11 @@ public class addActivity {
 				   }finally{
 				      //finally block used to close resources
 				      try{
-				         if(stmt!=null)
+				         if(stmt!=null) {
 				            stmt.close();
+				            stmt1.close();
+				         }   
+				         	
 				      }catch(SQLException se2){
 				      }// nothing we can do
 				      try{
@@ -208,10 +257,24 @@ public class addActivity {
 				      }//end finally try
 				   }
 				
+				EventQueue.invokeLater(new Runnable() {
+						public void run() {
+						try {
+							Features window = new Features(id);
+							window.frame.setVisible(true);
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
 			}
 		});
 		Submit.setBounds(269, 677, 145, 43);
 		frame.getContentPane().add(Submit);
+		
+		
 		
 		
 	}
