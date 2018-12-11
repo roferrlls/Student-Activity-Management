@@ -14,6 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
+import javax.swing.JList;
+import javax.swing.JPasswordField;
+import javax.swing.JComboBox;
 
 public class PartcipantForm {
 
@@ -28,6 +31,8 @@ public class PartcipantForm {
 	   PreparedStatement stmt = null;
 	   public int Aid;
 	   public String Pid;
+	   public String pass=null;
+	   private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -59,24 +64,53 @@ public class PartcipantForm {
 		JLabel lblEmail = new JLabel("EMAIL");
 		lblEmail.setFont(new Font("Serif", Font.PLAIN, 14));
 
-		lblEmail.setBounds(48, 122, 208, 28);
+		lblEmail.setBounds(48, 58, 208, 28);
 		frame.getContentPane().add(lblEmail);
 		
 		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(310, 129, 181, 21);
+		editorPane_1.setBounds(310, 58, 181, 21);
 		frame.getContentPane().add(editorPane_1);
 		
 		JLabel lblName = new JLabel("NAME");
 		lblName.setToolTipText("");
 		lblName.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblName.setBounds(48, 188, 208, 28);
+		lblName.setBounds(48, 97, 208, 28);
 		frame.getContentPane().add(lblName);
 		
 		JEditorPane editorPane_2 = new JEditorPane();
-		editorPane_2.setBounds(310, 184, 181, 21);
+		editorPane_2.setBounds(310, 97, 181, 21);
 		frame.getContentPane().add(editorPane_2);
 		
-		JButton btnSubmit = new JButton("SUBMIT");
+		JLabel lblNewLabel = new JLabel("PHONE NUMBER");
+		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+		lblNewLabel.setBounds(48, 136, 154, 29);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("BATCH");
+		lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(48, 191, 90, 14);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblPassword = new JLabel("PASSWORD");
+		lblPassword.setFont(new Font("Serif", Font.PLAIN, 14));
+		lblPassword.setBounds(48, 244, 90, 14);
+		frame.getContentPane().add(lblPassword);
+		
+		JEditorPane editorPane = new JEditorPane();
+		editorPane.setBounds(310, 145, 183, 20);
+		frame.getContentPane().add(editorPane);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(310, 239, 109, 21);
+		frame.getContentPane().add(passwordField);
+		
+		String batch[]= {"Y15","Y16","Y17","Y18","PG"};
+		JComboBox comboBox = new JComboBox(batch);
+		comboBox.setBounds(310, 190, 57, 20);
+		frame.getContentPane().add(comboBox);
+		
+		
+		JButton btnSubmit = new JButton("REGISTER");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -90,15 +124,22 @@ public class PartcipantForm {
 				      System.out.println("Creating statement...");
 				      String email = editorPane_1.getText().toString();
 				      String name =  editorPane_2.getText().toString();
-				      String query = "insert into Participant " + "values(?,?,?)";
+				      String phno = editorPane.getText().toString();
+					  String batch= String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));
+					  pass = new String(passwordField.getPassword());
+
+				      String query = "insert into Participant values (?,?,?,?,?,?)";
 				      stmt = conn.prepareStatement(query);
 				      
 				      stmt.setString(1, Pid);
 				      stmt.setString(2, email);
 				      stmt.setString(3, name);
+				      stmt.setString(4, phno);
+				      stmt.setString(5, batch);
+				      stmt.setString(6, pass);
 				      stmt.execute();
 				      
-				      String sql = "insert into Enrolls " + "values(?,?)";
+				      String sql = "insert into Enrolls (Aid,Pid) values(?,?)";
 			    	  stmt = conn.prepareStatement(sql);
 				      
 				      stmt.setInt(1, Aid);
@@ -133,8 +174,10 @@ public class PartcipantForm {
 
 			}
 		});	
-		btnSubmit.setBounds(147, 285, 163, 25);
+		btnSubmit.setBounds(147, 313, 163, 25);
 		frame.getContentPane().add(btnSubmit);
+		
+		
 		
 	}
 }

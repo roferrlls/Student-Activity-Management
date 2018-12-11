@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class EnterRoll {
 
@@ -47,6 +48,7 @@ public class EnterRoll {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -60,6 +62,7 @@ public class EnterRoll {
 		frame.getContentPane().add(editorPane);
 		
 		JButton btnSubmit = new JButton("SUBMIT");
+		btnSubmit.setBackground(new Color(135, 206, 235));
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{

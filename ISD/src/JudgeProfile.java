@@ -12,6 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import java.awt.Color;
 
 public class JudgeProfile {
 
@@ -126,12 +127,14 @@ public class JudgeProfile {
 		      }//end finally try
 		   }
         JList<String> list = new JList<>(l1);  
+        list.setBackground(new Color(255, 250, 205));
         list.setBounds(12,34, 721,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnSubmitMarks = new JButton("VIEW PARTICIPANTS");
+		btnSubmitMarks.setBackground(new Color(135, 206, 235));
 		btnSubmitMarks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -159,6 +162,7 @@ public class JudgeProfile {
 		frame.getContentPane().add(btnSubmitMarks);
 		
 		JButton btnNewButton = new JButton("Back");
+		btnNewButton.setBackground(new Color(135, 206, 235));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();
