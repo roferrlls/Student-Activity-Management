@@ -13,12 +13,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 
 public class JudgeProfile {
 

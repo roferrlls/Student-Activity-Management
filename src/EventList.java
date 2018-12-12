@@ -20,8 +20,13 @@ import javax.swing.JMenuItem;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
+import javax.swing.JLabel;
+import java.awt.Color;
+
 import java.awt.Color;
 import java.awt.Dimension;
+
 
 public class EventList {
 
@@ -35,8 +40,8 @@ public class EventList {
 	   PreparedStatement stmt1 = null;
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 	/**
@@ -88,6 +93,7 @@ public class EventList {
 			      //STEP 3: Open a connection
 			      System.out.println("Connecting to database...");
 			      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
 
 			      //STEP 4: Execute a query
 			      System.out.println("Creating statement...");
@@ -156,8 +162,10 @@ public class EventList {
 								window.frame.setVisible(true);
 							} catch (Exception e) {
 								e.printStackTrace();
+
 							}
 						}
+
 					});
 				}
 			});	
@@ -188,6 +196,7 @@ public class EventList {
 			        try{
 					      //STEP 2: Register JDBC driver
 					      Class.forName("com.mysql.jdbc.Driver");
+
 
 					      //STEP 3: Open a connection
 					      System.out.println("Connecting to database...");
@@ -418,4 +427,5 @@ public class EventList {
 	 * Initialize the contents of the frame.
 	 */
 	
+
 }

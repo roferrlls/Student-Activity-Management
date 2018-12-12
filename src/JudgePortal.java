@@ -20,7 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
 import java.awt.Color;
+
 import java.awt.Dimension;
+
 
 public class JudgePortal {
 
@@ -55,12 +57,17 @@ public class JudgePortal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
+		//frame.setBounds(100, 100, 800, 800);
+
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		
 		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		//frame.setBounds(100, 100, 800, 800);
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

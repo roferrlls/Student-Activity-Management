@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -23,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 
 public class SubmitUpdate {
 
@@ -99,10 +103,15 @@ public class SubmitUpdate {
 	 */
 	private void initialize() {
 		frame = new JFrame("ActivityProfile");
+
+		//frame.getContentPane().setBackground(new Color(255, 250, 205));
+		//frame.setBounds(100, 100, 800, 800);
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		//frame.setBounds(100, 100, 800, 800);
+
 		
 		JLabel lblName = new JLabel("NAME");
 		lblName.setFont(new Font("Serif", Font.PLAIN, 14));

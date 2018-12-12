@@ -12,6 +12,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,6 +22,7 @@ import javax.swing.JMenuItem;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 
 public class UpcomingEvent {
 
@@ -28,8 +32,8 @@ public class UpcomingEvent {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 

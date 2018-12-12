@@ -1,6 +1,10 @@
+
+import java.awt.EventQueue;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -13,9 +17,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 
 public class ParticipantList {
 
@@ -25,8 +31,10 @@ public class ParticipantList {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
+
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
+
 	   Connection conn = null;
 	   Statement stmt = null;
 	   public int Aid;
@@ -53,9 +61,11 @@ public class ParticipantList {
 	 */
 	private void initialize() {
 		frame = new JFrame("ParticipantList");
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		//frame.setBounds(100, 100, 800, 800);
+
 		DefaultListModel<String> l1 = new DefaultListModel<>();   
         try{
 		      //STEP 2: Register JDBC driver
@@ -137,6 +147,9 @@ public class ParticipantList {
 		});
 		btnNewButton_1.setBounds(202, 611, 275, 43);
 		frame.getContentPane().add(btnNewButton_1);
+
+	//}
+
 		
 
 		JMenuBar menuBar = new JMenuBar();
