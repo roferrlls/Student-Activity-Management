@@ -1,6 +1,6 @@
 import java.util.Date;
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -40,8 +40,8 @@ public class addActivity {
 	   public String uid;
 
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   PreparedStatement stmt = null;
 	   Statement stmt1 = null;
@@ -409,10 +409,10 @@ public class addActivity {
 		frame.getContentPane().add(Submit);
 		
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBackground(new Color(0, 128, 0));
-		dateChooser_1.setBounds(314, 475, 192, 28);
-		frame.getContentPane().add(dateChooser_1);
+//		JDateChooser dateChooser_1 = new JDateChooser();
+//		dateChooser_1.setBackground(new Color(0, 128, 0));
+//		dateChooser_1.setBounds(314, 475, 192, 28);
+//		frame.getContentPane().add(dateChooser_1);
 		
 		
 		final JMenuBar menuBar = new JMenuBar();

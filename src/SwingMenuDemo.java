@@ -53,7 +53,7 @@ public class SwingMenuDemo {
       
       JLabel lblNewLabel = new JLabel("New label");
       Image img=new ImageIcon(this.getClass().getResource("/image.jpg")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img));
+	lblNewLabel.setIcon(new ImageIcon(img));
       lblNewLabel.setBounds(0, 26, 800, 752);
       mainFrame.getContentPane().add(lblNewLabel);
       mainFrame.setVisible(true);  
