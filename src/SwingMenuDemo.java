@@ -1,6 +1,4 @@
 
-import java.awt.EventQueue;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,10 +23,12 @@ import javax.swing.JPanel;
 
 import java.awt.*;
 import java.awt.event.*;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class SwingMenuDemo {
    private JFrame mainFrame;
    private JLabel statusLabel;
+   Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
    public SwingMenuDemo(){
       prepareGUI();
@@ -39,7 +39,8 @@ public class SwingMenuDemo {
    }
    private void prepareGUI(){
       mainFrame = new JFrame("STUDENT ACTIVITY MANAGEMENT");
-      mainFrame.setSize(800,800);
+      //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    mainFrame.setSize(screenSize.width, screenSize.height);
       statusLabel = new JLabel("",JLabel.CENTER);
       statusLabel.setBounds(0, 519, 800, 259);
       
@@ -52,24 +53,46 @@ public class SwingMenuDemo {
       mainFrame.getContentPane().add(statusLabel);
       
       JLabel lblNewLabel = new JLabel("New label");
-      Image img=new ImageIcon(this.getClass().getResource("/image.jpg")).getImage();
+      Image img=new ImageIcon(this.getClass().getResource("/img1.jpg")).getImage();
 	lblNewLabel.setIcon(new ImageIcon(img));
-      lblNewLabel.setBounds(0, 26, 800, 752);
+	//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	lblNewLabel.setSize(screenSize.width, screenSize.height-100);
+     // lblNewLabel.setBounds(0, 26, 800, 752);
       mainFrame.getContentPane().add(lblNewLabel);
       mainFrame.setVisible(true);  
    }
    public void showMenuDemo(){
       //create a menu bar
       final JMenuBar menuBar = new JMenuBar();
+      menuBar.setPreferredSize(new Dimension(0, 50));
+      menuBar.setBounds(new Rectangle(0, 100, 100, 100));
+      menuBar.setAlignmentY(Component.CENTER_ALIGNMENT);
+	    menuBar.setSize(screenSize.width, screenSize.height);
+
+    //  menuBar.setBounds(100, 100, 150, 101);
+      menuBar.setForeground(Color.WHITE);
+      menuBar.setMargin(new Insets(0, 100, 0, 0));
+      menuBar.setEnabled(false);
+      menuBar.setBorderPainted(false);
+      menuBar.setBackground(Color.BLACK);
 
       //create menus
       JMenu ActivityMenu = new JMenu(" Activity");
+      ActivityMenu.setSize(new Dimension(0, 10));
+      ActivityMenu.setForeground(Color.WHITE);
 //      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
 //      final JMenu pastMenu = new JMenu("Past Activity");
-      final JMenu ParticipantMenu = new JMenu("My account");
+      JMenu ParticipantMenu = new JMenu("My account");
+      ParticipantMenu.setBackground(Color.BLACK);
+      ParticipantMenu.setForeground(Color.WHITE);
       final JMenu AddMenu = new JMenu("Add Activity");
+      AddMenu.setForeground(Color.WHITE);
       final JMenu JudgeMenu = new JMenu("Judge Portal");
+      JudgeMenu.setForeground(Color.WHITE);
       final JMenu UpdateMenu = new JMenu("Update Activity");
+      UpdateMenu.setForeground(Color.WHITE);
+      final JMenu SignupMenu = new JMenu("Signup");
+      SignupMenu.setForeground(Color.WHITE);
      
       menuBar.add(ActivityMenu);
 //      menuBar.add(upcomingMenu);
@@ -78,6 +101,7 @@ public class SwingMenuDemo {
       menuBar.add(JudgeMenu);       
       menuBar.add(UpdateMenu);
       menuBar.add(ParticipantMenu);
+      menuBar.add(SignupMenu);
       //add menubar to the frame
       mainFrame.setJMenuBar(menuBar);
       mainFrame.setVisible(true);  
@@ -119,6 +143,12 @@ public class SwingMenuDemo {
       ActivityMenuItem3.setActionCommand("Login");
       ActivityMenuItem3.addActionListener(menuItemListener);
       ParticipantMenu.add(ActivityMenuItem3);
+      
+      JMenuItem ActivityMenuItem4 = new JMenuItem("Signup");
+      ActivityMenuItem4.setActionCommand("Signup");
+      ActivityMenuItem4.addActionListener(menuItemListener);
+      SignupMenu.add(ActivityMenuItem4);
+      menuBar.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{ActivityMenu, ActivityMenuItem, ActivityMenuItem1, ActivityMenuItem2, AddMenu, AddMenuItem, JudgeMenu, JudgeMenuItem, UpdateMenu, UpdateMenuItem, ParticipantMenu, ActivityMenuItem3,ActivityMenuItem4}));
       
     
    }
@@ -206,6 +236,19 @@ public class SwingMenuDemo {
     				public void run() {
     					try {
     						Login window = new Login();
+    						window.frame.setVisible(true);
+    					} catch (Exception e) {
+    						e.printStackTrace();
+    					}
+    				}
+    			});
+    	  }
+    	  
+    	  else if(e.getActionCommand().equals("Signup")){
+    		  EventQueue.invokeLater(new Runnable() {
+    				public void run() {
+    					try {
+    						PartcipantForm window = new PartcipantForm();
     						window.frame.setVisible(true);
     					} catch (Exception e) {
     						e.printStackTrace();
