@@ -423,7 +423,7 @@ public class ActivityProfile {
 		      }//end finally try
 		   }
 
-	}
+	//}
 	
 
 		

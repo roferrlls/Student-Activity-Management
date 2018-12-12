@@ -31,8 +31,8 @@ public class MyActivity {
 	   PreparedStatement stmt1 = null;
 
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   Statement dup = null;
