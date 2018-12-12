@@ -1,7 +1,9 @@
 import java.util.Date;
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -18,9 +20,13 @@ import javax.swing.SpinnerDateModel;
 
 import com.toedter.calendar.JDateChooser;
 
+
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
@@ -31,6 +37,7 @@ public class addActivity {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 	   public int id =0;
+	   public String uid;
 
 	   //  Database credentials
 	   static final String USER = "root";
@@ -43,22 +50,19 @@ public class addActivity {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					addActivity window = new addActivity();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
 	}
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public addActivity() {
+		
+		initialize();
+	}
+	public addActivity(String val) {
+		uid = val;
 		initialize();
 	}
 
@@ -67,7 +71,9 @@ public class addActivity {
 	 */
 	private void initialize() {
 		frame = new JFrame("Add Activity");
-		frame.setBounds(100, 100, 800, 800);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    frame.setSize(screenSize.width, screenSize.height);
+		//frame.setBounds(700, 700,700, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -169,12 +175,14 @@ public class addActivity {
 		lblDeadlineDate.setBounds(47, 488, 158, 15);
 		frame.getContentPane().add(lblDeadlineDate);
 		
+
 		JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBackground(new Color(0, 128, 0));
 		dateChooser_1.setBounds(314, 475, 192, 28);
 		frame.getContentPane().add(dateChooser_1);
 		
 		
+
 		
 		JEditorPane editorPane_6 = new JEditorPane();
 		editorPane_6.setBounds(310, 407, 459, 43);
@@ -211,8 +219,11 @@ public class addActivity {
 //				String date =  editorPane_1.getText().toString();
 //				String time = editorPane_2.getText().toString();
 				// getting date
+
 				String whole = dateChooser.getDate().toString();
 			
+			//	String whole = dateChooser.getDate().toString();				
+
 				String date = whole.substring(24,28);
 				String m = null;
 				date = date + "-";
@@ -243,7 +254,7 @@ public class addActivity {
 				date = date + "-" + day;
 				//System.out.println(date);
 				
-				
+	
 				
 				
 				//getting deadline
@@ -266,6 +277,7 @@ public class addActivity {
 				ddate = ddate + "-" + dday;
 				
 				
+
 				//getting time
 				
 				String val=timeSpinner.getValue().toString();
@@ -273,7 +285,14 @@ public class addActivity {
 				
 				String venue = editorPane_3.getText().toString();
 				String exaud = editorPane_4.getText().toString();
-				String contact = editorPane_5.getText().toString();
+				int contact;
+				String value = editorPane_5.getText().toString();
+				try {
+			    	  contact = Integer.parseInt(editorPane_5.getText().toString());
+			      }catch(NumberFormatException ee) {
+			    	  JOptionPane.showMessageDialog(frame,"Contact Field Is Invalid");  
+						return;
+			      }
 				String description = editorPane_6.getText().toString();
 				String club = String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));
 				String dept = String.valueOf(comboBox_1.getItemAt(comboBox_1.getSelectedIndex()));
@@ -297,8 +316,8 @@ public class addActivity {
 					JOptionPane.showMessageDialog(frame,"expected Audience field is empty");  
 					return;
 				}
-				if(contact.length() == 0) {
-					JOptionPane.showMessageDialog(frame,"contact field is empty");  
+				if(value.length() != 10) {
+					JOptionPane.showMessageDialog(frame,"contact field is Invalid");  
 					return;
 				}
 				if(description.length() == 0) {
@@ -311,7 +330,6 @@ public class addActivity {
 				if(dept.length() == 0) {
 					dept="";  
 				}
-				//System.out.print(club + " "+ dept + " " + time + " " + venue + " " + exaud + " " + contact);
 				try{
 				      //STEP 2: Register JDBC driver
 				      Class.forName("com.mysql.jdbc.Driver");
@@ -339,12 +357,14 @@ public class addActivity {
 				      stmt.setString(4, venue);
 				      stmt.setString(5, description);
 				      stmt.setString(6, exaud);
-				      stmt.setString(7,contact);
+				      stmt.setInt(7,contact);
 				      stmt.setString(8, club);
 				      stmt.setString(9, dept);
 				      stmt.setString(10, ddate);
 				      stmt.execute();
-				      
+				      int casee = id + 1;
+				      query = "insert into AddAct values(" + casee + ", '" + uid +"' " + ")";
+				      stmt1.executeUpdate(query);
 				      stmt.close();
 				      conn.close();
 				   }catch(SQLException se){
@@ -385,8 +405,75 @@ public class addActivity {
 				
 			}
 		});
-		Submit.setBounds(269, 677, 145, 43);
+		Submit.setBounds(224, 609, 145, 43);
 		frame.getContentPane().add(Submit);
+		
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBackground(new Color(0, 128, 0));
+		dateChooser_1.setBounds(314, 475, 192, 28);
+		frame.getContentPane().add(dateChooser_1);
+		
+		
+		final JMenuBar menuBar = new JMenuBar();
+		//
+//			      //create menus
+			      JMenu ActivityMenu = new JMenu(" Activity");
+//			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
+//			      final JMenu pastMenu = new JMenu("Past Activity");
+			      final JMenu ParticipantMenu = new JMenu("My account");
+			      final JMenu AddMenu = new JMenu("Add Activity");
+			      final JMenu JudgeMenu = new JMenu("Judge Portal");
+			      final JMenu UpdateMenu = new JMenu("Update Activity");
+			     
+			      menuBar.add(ActivityMenu);
+//			      menuBar.add(upcomingMenu);
+//			      menuBar.add(pastMenu);       
+			      menuBar.add(AddMenu);
+			      menuBar.add(JudgeMenu);       
+			      menuBar.add(UpdateMenu);
+			      menuBar.add(ParticipantMenu);
+			      //add menubar to the frame
+			      frame.setJMenuBar(menuBar);
+			      frame.setVisible(true);  
+			    
+			     // JMenuItem newMenuItem = new JMenuItem("New");
+			      JMenuItem ActivityMenuItem = new JMenuItem("Current Activity");
+			      MenuItemListener menuItemListener = new MenuItemListener();
+			      ActivityMenuItem.setActionCommand("Current Activity");
+			      ActivityMenuItem.addActionListener(menuItemListener);
+			      ActivityMenu.add(ActivityMenuItem);
+			      
+			      JMenuItem ActivityMenuItem1 = new JMenuItem("Upcoming Activity");
+			      
+			      ActivityMenuItem1.setActionCommand("upcoming Activity");
+			      ActivityMenuItem1.addActionListener(menuItemListener);
+			      ActivityMenu.add(ActivityMenuItem1);
+			      
+			      JMenuItem ActivityMenuItem2 = new JMenuItem("Past Activity");
+			      ActivityMenuItem2.setActionCommand("Past Activity");
+			      ActivityMenuItem2.addActionListener(menuItemListener);
+			      ActivityMenu.add(ActivityMenuItem2);
+			      
+			      JMenuItem AddMenuItem = new JMenuItem("open");
+			      AddMenuItem.setActionCommand("Add Activity");
+			      AddMenuItem.addActionListener(menuItemListener);
+			      AddMenu.add(AddMenuItem);
+			      
+			      JMenuItem JudgeMenuItem = new JMenuItem("open");
+			      JudgeMenuItem.setActionCommand("Judge");
+			      JudgeMenuItem.addActionListener(menuItemListener);
+			      JudgeMenu.add(JudgeMenuItem);
+			      
+			      JMenuItem UpdateMenuItem = new JMenuItem("open");
+			      UpdateMenuItem.setActionCommand("Update Activity");
+			      UpdateMenuItem.addActionListener(menuItemListener);
+			      UpdateMenu.add(UpdateMenuItem);
+			      
+			      JMenuItem ActivityMenuItem3 = new JMenuItem("Login");
+			      ActivityMenuItem3.setActionCommand("Login");
+			      ActivityMenuItem3.addActionListener(menuItemListener);
+			      ParticipantMenu.add(ActivityMenuItem3);
 		
 		
 		
@@ -394,4 +481,99 @@ public class addActivity {
 		
 		
 	}
+	
+	 class MenuItemListener implements ActionListener {
+	      public void actionPerformed(ActionEvent e) {    
+	    	  if(e.getActionCommand().equals("Current Activity")){
+		    	  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								EventList window = new EventList();
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  else if(e.getActionCommand().equals("upcoming Activity")){
+		    	  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								UpcomingEvent window = new UpcomingEvent();
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  else if(e.getActionCommand().equals("Past Activity")){
+		    	  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								PastEvent window = new PastEvent();
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  
+	    	  
+	    	  else if(e.getActionCommand().equals("Add Activity")){
+		    	  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								AuthorizedUser window = new AuthorizedUser(1);
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  
+	    	  else if(e.getActionCommand().equals("Judge")){
+	    		  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								JudgePortal window = new JudgePortal();
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  
+	    	  else if(e.getActionCommand().equals("Update Activity")){
+	    		  EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								AuthorizedUser window = new AuthorizedUser(2);
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+	    	  }
+	    	  
+	    	  else if(e.getActionCommand().equals("Login")){
+	    		  EventQueue.invokeLater(new Runnable() {
+	    				public void run() {
+	    					try {
+	    						Login window = new Login();
+	    						window.frame.setVisible(true);
+	    					} catch (Exception e) {
+	    						e.printStackTrace();
+ 					}
+	    				}
+	    			});
+	    	  }
+	      
+	      }        
+	   }
 }
