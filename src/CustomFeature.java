@@ -24,8 +24,8 @@ public class CustomFeature {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   PreparedStatement stmt1 = null;

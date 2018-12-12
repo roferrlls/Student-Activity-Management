@@ -14,20 +14,20 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class EventList {
 
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-	   
 	   DefaultListModel<String> l1;
 	   JList<String> list;
 	   PreparedStatement stmt1 = null;
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 	/**
@@ -107,12 +107,14 @@ public class EventList {
 		      }//end finally try
 		   }
         list = new JList<>(l1);  
+        list.setBackground(new Color(255, 250, 205));
         list.setBounds(12,34, 721,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnViewDetails = new JButton("VIEW DETAILS");
+		btnViewDetails.setBackground(new Color(135, 206, 235));
 		btnViewDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -136,16 +138,17 @@ public class EventList {
 				});
 			}
 		});	
-		btnViewDetails.setBounds(47, 737, 275, 51);
+		btnViewDetails.setBounds(47, 719, 269, 43);
 		frame.getContentPane().add(btnViewDetails);
 		
 		JButton btnNewButton = new JButton("BACK");
+		btnNewButton.setBackground(new Color(135, 206, 235));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
-		btnNewButton.setBounds(474, 723, 275, 43);
+		btnNewButton.setBounds(449, 719, 275, 43);
 		frame.getContentPane().add(btnNewButton);
 		
 		String[] str = {"LC","Quizzinga"};
@@ -154,6 +157,7 @@ public class EventList {
 		frame.getContentPane().add(comboBox);
 		 
 		JButton btnFilterB = new JButton("Filter By Club");
+		btnFilterB.setBackground(new Color(135, 206, 235));
 		btnFilterB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				l1.clear();
@@ -210,7 +214,7 @@ public class EventList {
 		        frame.getContentPane().add(list);
 			}
 		});
-		btnFilterB.setBounds(476, 577, 214, 25);
+		btnFilterB.setBounds(476, 590, 214, 25);
 		frame.getContentPane().add(btnFilterB);
 		
 		String[] dept = {"CSE","ECE"};
@@ -219,7 +223,8 @@ public class EventList {
 		frame.getContentPane().add(comboBox_1);
 		
 		JButton button = new JButton("Filter By Dept");
-		button.setBounds(449, 664, 214, 25);
+		button.setBackground(new Color(135, 206, 235));
+		button.setBounds(476, 652, 214, 25);
 		frame.getContentPane().add(button);
 	}
 }

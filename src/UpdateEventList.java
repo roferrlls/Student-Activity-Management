@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class UpdateEventList {
 
@@ -99,12 +100,14 @@ public class UpdateEventList {
 		      }//end finally try
 		   }
         list = new JList<>(l1);  
+        list.setBackground(new Color(255, 250, 205));
         list.setBounds(12,34, 721,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnViewDetails = new JButton("UPDATE DETAILS");
+		btnViewDetails.setBackground(new Color(135, 206, 235));
 		btnViewDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -132,6 +135,7 @@ public class UpdateEventList {
 		frame.getContentPane().add(btnViewDetails);
 		
 		JButton btnNewButton = new JButton("BACK");
+		btnNewButton.setBackground(new Color(135, 206, 235));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();

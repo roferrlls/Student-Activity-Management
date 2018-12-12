@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,10 +11,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import java.awt.Color;
 
-public class JudgeProfile {
+public class ParticipantList {
 
+	
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
@@ -24,17 +23,14 @@ public class JudgeProfile {
 	   static final String USER = "root";
 	   static final String PASS = "root";
 	   Connection conn = null;
-	   PreparedStatement stmt = null;
-	   PreparedStatement stmt1=null;
-	   public String email;
-	   
-	   
+	   Statement stmt = null;
+	   public int Aid;
+	   public String Pid;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
 		
 	}
 
@@ -42,8 +38,8 @@ public class JudgeProfile {
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public JudgeProfile(String email) {
-		this.email=email;
+	public ParticipantList(int id) {
+		Aid=id;
 		initialize();
 	}
 
@@ -51,7 +47,7 @@ public class JudgeProfile {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("JudgeProfile");
+		frame = new JFrame("ParticipantList");
 		frame.setBounds(100, 100, 800, 800);
 		DefaultListModel<String> l1 = new DefaultListModel<>();   
         try{
@@ -64,43 +60,15 @@ public class JudgeProfile {
 
 		      //STEP 4: Execute a query
 		      System.out.println("Creating statement...");
+		      stmt = conn.createStatement();
 		      String sql;
-		      sql = "select Aid from Contains where Judge_Email= " + "?";
-		      stmt = conn.prepareStatement(sql);
-		      stmt.setString(1,email);
-		      ResultSet rs = stmt.executeQuery();
+		      sql = "SELECT Pid from Enrolls where Aid="+Aid;
+		      ResultSet rs = stmt.executeQuery(sql);
 		      while(rs.next()){
 			         //Retrieve by column name
+			        String name = rs.getString("Pid");
 			        
-			        int id = rs.getInt("Aid");
-			         System.out.println( id);
-			         try{
-					     
-					      String query;
-					      query = "select * from Activity where Aid = " + "?";
-					      stmt1 = conn.prepareStatement(query);
-					      stmt1.setInt(1,id);
-					      ResultSet rs1 = stmt1.executeQuery();
-					      
-					      while(rs1.next()){
-						         //Retrieve by column name
-						        String name = rs1.getString("Name");
-						        String str = "(" + id + ")" ;
-						        str += " "  +name;
-						         l1.addElement(str);
-						        
-						       
-						      }
-					      
-					      
-					   }catch(SQLException se){
-					      //Handle errors for JDBC
-					      se.printStackTrace();
-					   }catch(Exception e){
-					      //Handle errors for Class.forName
-					      e.printStackTrace();
-					   }
-			         
+			         l1.addElement(name);
 			       
 			      }
 		      rs.close();
@@ -127,52 +95,40 @@ public class JudgeProfile {
 		      }//end finally try
 		   }
         JList<String> list = new JList<>(l1);  
-        list.setBackground(new Color(255, 250, 205));
         list.setBounds(12,34, 721,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		JButton btnNewButton = new JButton("BACK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton.setBounds(202, 677, 275, 43);
+		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnSubmitMarks = new JButton("VIEW PARTICIPANTS");
-		btnSubmitMarks.setBackground(new Color(135, 206, 235));
-		btnSubmitMarks.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("View Details");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							String dest = list.getSelectedValue();
-							int i =1;
-							String temp = "";
-							temp += dest.charAt(i);
-							while(dest.charAt(i+1) != ')') {
-								temp += dest.charAt(i+1);
-								i++;
-							}
-							int val = Integer.parseInt(temp);
-							AssignMarks window = new AssignMarks(val,email);
+							Pid= list.getSelectedValue();
+
+							ParticipantDetails window = new ParticipantDetails(Pid);
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				});
+				
+				
+				
 			}
-		});	
-		btnSubmitMarks.setBounds(209, 591, 395, 25);
-		frame.getContentPane().add(btnSubmitMarks);
-		
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.setBackground(new Color(135, 206, 235));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
-			}
-		});	
-		btnNewButton.setBounds(209, 685, 395, 25);
-		frame.getContentPane().add(btnNewButton);
-		
-		
-		
+		});
+		btnNewButton_1.setBounds(202, 611, 275, 43);
+		frame.getContentPane().add(btnNewButton_1);
 	}
-
 }
