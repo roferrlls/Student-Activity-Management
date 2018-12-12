@@ -24,7 +24,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 
@@ -48,7 +48,16 @@ public class PartcipantForm {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+		 EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						PartcipantForm window = new PartcipantForm();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 	}
 
 	/**
@@ -58,6 +67,12 @@ public class PartcipantForm {
 	public PartcipantForm(int Aid,String Pid) {
 		this.Aid = Aid;
 		this.Pid = Pid;
+		initialize();
+	}
+	
+	public PartcipantForm() {
+		//this.Aid = Aid;
+		//this.Pid = Pid;
 		initialize();
 	}
 
@@ -71,6 +86,15 @@ public class PartcipantForm {
 		//frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JLabel lblRollNo = new JLabel("Roll No.");
+		lblRollNo.setBounds(48, 31, 70, 15);
+		frame.getContentPane().add(lblRollNo);
+		
+		JEditorPane editorPane_3 = new JEditorPane();
+		editorPane_3.setBounds(313, 12, 178, 21);
+		frame.getContentPane().add(editorPane_3);
+		
 		
 		
 		JLabel lblEmail = new JLabel("EMAIL");
@@ -134,30 +158,63 @@ public class PartcipantForm {
 				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
 				      //STEP 4: Execute a query
 				      System.out.println("Creating statement...");
+				      String roll = editorPane_3.getText().toString();
 				      String email = editorPane_1.getText().toString();
 				      String name =  editorPane_2.getText().toString();
 				      String phno = editorPane.getText().toString();
+				      int contact;
+				      try {
+				    	  contact = Integer.parseInt(phno);
+				      }catch(NumberFormatException ee) {
+				    	  JOptionPane.showMessageDialog(frame,"Contact Field Is Invalid");  
+							return;
+				      }
 					  String batch= String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));
 					  pass = new String(passwordField.getPassword());
+					  
+					  if(name.length() == 0) {
+							JOptionPane.showMessageDialog(frame,"Name field is empty");  
+							return;
+						}
+						if(roll.length() == 0) {
+							JOptionPane.showMessageDialog(frame,"roll number field is empty");  
+							return;
+						}
+						if(email.length() == 0) {
+							JOptionPane.showMessageDialog(frame,"email field is empty");  
+							return;
+						}
+						if(phno.length() != 10) {
+							JOptionPane.showMessageDialog(frame,"phone number field is invalid");  
+							return;
+						}
+						if(batch.length() == 0) {
+							JOptionPane.showMessageDialog(frame,"batch field is empty");  
+							return;
+						}
+						if(pass.length() < 8) {
+							JOptionPane.showMessageDialog(frame,"password is weak");  
+							return;
+						}
 
 				      String query = "insert into Participant values (?,?,?,?,?,?)";
 				      stmt = conn.prepareStatement(query);
 				      
-				      stmt.setString(1, Pid);
+				      stmt.setString(1, roll);
 				      stmt.setString(2, email);
 				      stmt.setString(3, name);
-				      stmt.setString(4, phno);
+				      stmt.setInt(4, contact);
 				      stmt.setString(5, batch);
 				      stmt.setString(6, pass);
 				      stmt.execute();
-				      
-				      String sql = "insert into Enrolls (Aid,Pid) values(?,?)";
-			    	  stmt = conn.prepareStatement(sql);
-				      
-				      stmt.setInt(1, Aid);
-				      stmt.setString(2, Pid);
-				      stmt.execute();	  
-				    	  
+//				      
+//				      String sql = "insert into Enrolls (Aid,Pid) values(?,?)";
+//			    	  stmt = conn.prepareStatement(sql);
+//				      
+//				      stmt.setInt(1, Aid);
+//				      stmt.setString(2, Pid);
+//				      stmt.execute();	  
+//				    	  
 				     
 				      
 				      stmt.close();
@@ -182,12 +239,15 @@ public class PartcipantForm {
 				         se.printStackTrace();
 				      }//end finally try
 				   }
+				JOptionPane.showMessageDialog(frame,"Successfully Registered");  
+
 				frame.dispose();
 
 			}
 		});	
 		btnSubmit.setBounds(147, 313, 163, 25);
 		frame.getContentPane().add(btnSubmit);
+		
 		
 
 
@@ -348,5 +408,4 @@ public class PartcipantForm {
 		      
 		      }        
 		   }
-
 }
