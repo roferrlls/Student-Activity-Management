@@ -1,6 +1,6 @@
 import java.util.Date;
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -40,8 +40,8 @@ public class addActivity {
 	   public String uid;
 
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   PreparedStatement stmt = null;
 	   Statement stmt1 = null;
@@ -175,14 +175,6 @@ public class addActivity {
 		lblDeadlineDate.setBounds(47, 488, 158, 15);
 		frame.getContentPane().add(lblDeadlineDate);
 		
-
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBackground(new Color(0, 128, 0));
-		dateChooser_1.setBounds(314, 475, 192, 28);
-		frame.getContentPane().add(dateChooser_1);
-		
-		
-
 		
 		JEditorPane editorPane_6 = new JEditorPane();
 		editorPane_6.setBounds(310, 407, 459, 43);
@@ -219,11 +211,7 @@ public class addActivity {
 //				String date =  editorPane_1.getText().toString();
 //				String time = editorPane_2.getText().toString();
 				// getting date
-
-				String whole = dateChooser.getDate().toString();
-			
-			//	String whole = dateChooser.getDate().toString();				
-
+				String whole = dateChooser.getDate().toString();				
 				String date = whole.substring(24,28);
 				String m = null;
 				date = date + "-";
@@ -254,30 +242,7 @@ public class addActivity {
 				date = date + "-" + day;
 				//System.out.println(date);
 				
-	
 				
-				
-				//getting deadline
-				whole = dateChooser_1.getDate().toString();
-				String ddate = whole.substring(24,28);
-				m = null;
-				ddate = ddate + "-";
-				String dmonth = whole.substring(4,7);
-				
-				for(int i=0;i<12;i++) {
-					if(tp[i].equals(dmonth)) {
-						m = Integer.toString(i+1);
-					}
-				}
-				if(m.length() == 1) {
-					m = "0" + m;
-				}
-				ddate = ddate + m;
-				String dday = whole.substring(8,10);
-				ddate = ddate + "-" + dday;
-				
-				
-
 				//getting time
 				
 				String val=timeSpinner.getValue().toString();
@@ -348,7 +313,7 @@ public class addActivity {
 				      }
 				      
 				      System.out.println(id);
-				      String query = "insert into Activity (name,time,date,venue,description,Expected_Audience,Contact_Details,Club,Department,Deadline)" + " values(?,?,?,?,?,?,?,?,?,?)";
+				      String query = "insert into Activity (name,time,date,venue,description,Expected_Audience,Contact_Details,Club,Department)" + " values(?,?,?,?,?,?,?,?,?)";
 				      stmt = conn.prepareStatement(query);
 				      
 				      stmt.setString(1, name);
@@ -360,7 +325,6 @@ public class addActivity {
 				      stmt.setInt(7,contact);
 				      stmt.setString(8, club);
 				      stmt.setString(9, dept);
-				      stmt.setString(10, ddate);
 				      stmt.execute();
 				      int casee = id + 1;
 				      query = "insert into AddAct values(" + casee + ", '" + uid +"' " + ")";
@@ -474,8 +438,6 @@ public class addActivity {
 			      ActivityMenuItem3.setActionCommand("Login");
 			      ActivityMenuItem3.addActionListener(menuItemListener);
 			      ParticipantMenu.add(ActivityMenuItem3);
-		
-		
 		
 		
 		

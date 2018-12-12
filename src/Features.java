@@ -35,8 +35,8 @@ public class Features implements ActionListener{
 	   public String x;
 	   JLabel lblNewLabel;
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   PreparedStatement stmt1 = null;
@@ -148,7 +148,7 @@ public class Features implements ActionListener{
 		x="Seats";
 		
 		lblNewLabel = new JLabel("Seats");
-		lblNewLabel.setBounds(48, 98, 143, 60);
+		lblNewLabel.setBounds(50, 131, 143, 85);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JEditorPane editorPane = new JEditorPane();

@@ -18,19 +18,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
 
 public class Login {
 
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   PreparedStatement stmt1 = null;
-	   private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -80,16 +78,15 @@ public class Login {
 		editorPane.setBounds(201, 24, 106, 21);
 		frame.getContentPane().add(editorPane);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(201, 93, 106, 21);
-		frame.getContentPane().add(passwordField);
+		JEditorPane editorPane_1 = new JEditorPane();
+		editorPane_1.setBounds(201, 90, 106, 21);
+		frame.getContentPane().add(editorPane_1);
 		
 		JButton btnSubmit = new JButton("LOGIN");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String roll = editorPane.getText().toString();
-				//String password = passwordField.getText().toString();
-				String password = new String(passwordField.getPassword());
+				String password = editorPane_1.getText().toString();
 				String rpassword = "";
 				try{
 				      //STEP 2: Register JDBC driver
@@ -154,7 +151,6 @@ public class Login {
 		frame.getContentPane().add(btnSubmit);
 		
 
-
 		JMenuBar menuBar = new JMenuBar();
 		//
 //				      //create menus
@@ -214,7 +210,6 @@ public class Login {
 				      ActivityMenuItem3.setActionCommand("Login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
-
 	}
 	
 	   

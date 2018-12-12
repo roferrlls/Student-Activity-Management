@@ -15,16 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
-
-import javax.swing.JList;
-
 import java.awt.Dimension;
 
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 
@@ -190,7 +186,6 @@ public class PartcipantForm {
 		frame.getContentPane().add(btnSubmit);
 		
 
-
 		JMenuBar menuBar = new JMenuBar();
 		//
 //				      //create menus
@@ -348,5 +343,6 @@ public class PartcipantForm {
 		      
 		      }        
 		   }
-
+	
+	
 }

@@ -24,8 +24,8 @@ public class MyAccount {
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-	   static final String USER = "root";
-	   static final String PASS = "root";
+	   static final String USER = "kritika";
+	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   Statement stmt = null;
 	   PreparedStatement stmt1 = null;
