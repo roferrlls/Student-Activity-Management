@@ -20,9 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
 import java.awt.Color;
-
 import java.awt.Dimension;
-
 
 public class AssignMarks {
 
@@ -61,13 +59,9 @@ public class AssignMarks {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 250, 205));
-
-	//	frame.setBounds(100, 100, 800, 800);
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		//frame.setBounds(100, 100, 800, 800);
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -132,9 +126,6 @@ public class AssignMarks {
 		editorPane.setBounds(235, 119, 106, 21);
 		frame.getContentPane().add(editorPane);
 		
-
-	//	JButton btnSubmitScore = new JButton("SUBMIT SCORE");
-
 		JLabel lblNewLabel = new JLabel("Review");
 		lblNewLabel.setBounds(64, 175, 70, 15);
 		frame.getContentPane().add(lblNewLabel);
@@ -146,7 +137,6 @@ public class AssignMarks {
 		
 		
 		JButton btnSubmitScore = new JButton("SUBMIT");
-
 		btnSubmitScore.setBackground(new Color(135, 206, 235));
 		btnSubmitScore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

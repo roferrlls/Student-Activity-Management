@@ -1,13 +1,5 @@
 import java.awt.EventQueue;
 import java.awt.Font;
-
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -20,7 +12,6 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
 
 import javax.swing.JPanel;
 import javax.swing.JDesktopPane;
@@ -37,9 +28,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
 public class RateActivity {
-
-	public int Aid;
-
+	public int Aid = 2;
 	public int rating;
 	public String check;
 	public String rollNum;
@@ -50,13 +39,8 @@ public class RateActivity {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-
-	   //static final String USER = "root";
-	 //  static final String PASS = "root";
-
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
-
 	   Connection conn = null;
 	   Statement stmt = null;
 
@@ -93,17 +77,11 @@ public class RateActivity {
 	 */
 	private void initialize() {
 		frame = new JFrame("Rate Activity");
-
-// 		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 14));
-// 		frame.getContentPane().setBackground(new Color(255, 250, 205));
-// 		frame.setBounds(100, 100, 800, 800);
-
 		  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		    frame.setSize(screenSize.width, screenSize.height);
 		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 14));
 		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		//frame.setBounds(100, 100, 800, 800);
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -135,13 +113,6 @@ public class RateActivity {
 
 		
 		JButton btnNewButton = new JButton("Rate");
-
-// 		btnNewButton.addActionListener(new ActionListener() {
-// 			public void actionPerformed(ActionEvent e) {
-// 				rollNum = editorPaneRollNum.getText().toString();
-				
-				
-
 		btnNewButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -159,90 +130,6 @@ public class RateActivity {
 				      System.out.println("Creating statement...");
 				      stmt = conn.createStatement();
 				      String sql;
-
-// 				      sql = "SELECT Aid from Enrolls where Pid = '" + rollNum + "'";
-// 				      //System.out.println(sql);
-// 				      ResultSet rs = stmt.executeQuery(sql);
-// 				      if(!rs.next()) {
-// 				    	  EventQueue.invokeLater(new Runnable() {
-// 								public void run() {
-// 									try {
-// 										ErrorMessage window = new ErrorMessage();
-// 										window.frame.setVisible(true);
-// 									} catch (Exception e) {
-// 										e.printStackTrace();
-// 									}
-// 								}
-// 							});
-// 				      }
-// 				      else 
-// 				    	  check1 = rs.getString("Aid");
-// 				      rs.close();
-// 				      stmt.close();
-// 				      conn.close();
-// 				   }catch(SQLException se){
-// 				      //Handle errors for JDBC
-// 				      se.printStackTrace();
-// 				   }catch(Exception e2){
-// 				      //Handle errors for Class.forName
-// 				      e2.printStackTrace();
-// 				   }finally{
-// 				      //finally block used to close resources
-// 				      try{
-// 				         if(stmt!=null)
-// 				            stmt.close();
-// 				      }catch(SQLException se2){
-// 				      }// nothing we can do
-// 				      try{
-// 				         if(conn!=null)
-// 				            conn.close();
-// 				      }catch(SQLException se){
-// 				         se.printStackTrace();
-// 				      }//end finally try
-// 				   }
-
-// 				if(Aid != Integer.parseInt(check1)) {
-// 					EventQueue.invokeLater(new Runnable() {
-// 						public void run() {
-// 							try {
-// 								ErrorMessage window = new ErrorMessage();
-// 								window.frame.setVisible(true);
-// 							} catch (Exception e) {
-// 								e.printStackTrace();
-// 							}
-// 						}
-// 					});
-// 				}
-				
-				
-				
-				
-				
-				
-				
-// 				//String rating = editorPaneRating.getText().toString();
-// 				String pass = new String(passwordField.getPassword());
-// 				//System.out.println(rollNum);
-// 				//System.out.println(pass);
-// 				// checking for password in database
-// 				try{
-// 				      //STEP 2: Register JDBC driver
-// 				      Class.forName("com.mysql.jdbc.Driver");
-
-// 				      //STEP 3: Open a connection
-// 				      System.out.println("Connecting to database...");
-// 				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-// 				      //STEP 4: Execute a query
-// 				      System.out.println("Creating statement...");
-// 				      stmt = conn.createStatement();
-// 				      String sql;
-// 				      sql = "SELECT Password from Participant where Pid = '" + rollNum + "'";
-// 				      //System.out.println(sql);
-// 				      ResultSet rs = stmt.executeQuery(sql);
-// 				      rs.next();
-// 				      check = rs.getString("Password");
-
 				      String s;
 				      sql = "SELECT Aid from Enrolls where Pid = '" + rollNum + "'";
 				      String pass = new String(passwordField.getPassword());
@@ -316,7 +203,6 @@ public class RateActivity {
 				    	  }
 				      }
 				    	 // check1 = rs.getString("Aid");
-
 				      rs.close();
 				      stmt.close();
 				      conn.close();
@@ -340,120 +226,6 @@ public class RateActivity {
 				         se.printStackTrace();
 				      }//end finally try
 				   }
-
-
-// 				if(!check.equals(pass)) {
-					
-// 					EventQueue.invokeLater(new Runnable() {
-// 						public void run() {
-// 							try {
-// 								ErrorMessage window = new ErrorMessage();
-// 								window.frame.setVisible(true);
-// 							} catch (Exception e) {
-// 								e.printStackTrace();
-// 							}
-// 						}
-// 					});
-					
-// 				}
-// 				else {
-// 					JFrame frame = new JFrame();
-// 			        JPanel panel = new JPanel();
-// 			        StarRater starRater = new StarRater(5, 2, 1);
-// 			        starRater.addStarListener(
-// 			            new StarRater.StarListener()   {
-
-// 			                public void handleSelection(int selection) {
-			                    
-// 			                	rating = selection;
-// 			                	try{
-// 								      //STEP 2: Register JDBC driver
-// 								      Class.forName("com.mysql.jdbc.Driver");
-
-// 								      //STEP 3: Open a connection
-// 								      System.out.println("Connecting to database...");
-// 								      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-// 								      //STEP 4: Execute a query
-// 								      System.out.println("Creating statement...");
-// 								      stmt = conn.createStatement();
-// 								      String sql;
-// 								      PreparedStatement st=null;
-// 								      System.out.println(Integer.toString(rating));
-// 								      sql = "Update Enrolls set Rating = ? where Aid = ? and Pid = ?";
-// 								      st=conn.prepareStatement(sql);
-// 								      st.setInt(1, rating);
-// 								      st.setInt(2, Aid);
-// 								      st.setString(3, rollNum);
-// 								      System.out.println(sql);
-// 								      st.executeUpdate();
-// 								      //rs.next();
-// 								      //check = rs.getString("Password");
-// 								      //rs.close();
-// 								      stmt.close();
-// 								      conn.close();
-// 								   }catch(SQLException se){
-// 								      //Handle errors for JDBC
-// 								      se.printStackTrace();
-// 								   }catch(Exception e2){
-// 								      //Handle errors for Class.forName
-// 								      e2.printStackTrace();
-// 								   }finally{
-// 								      //finally block used to close resources
-// 								      try{
-// 								         if(stmt!=null)
-// 								            stmt.close();
-// 								      }catch(SQLException se2){
-// 								      }// nothing we can do
-// 								      try{
-// 								         if(conn!=null)
-// 								            conn.close();
-// 								      }catch(SQLException se){
-// 								         se.printStackTrace();
-// 								      }//end finally try
-// 								   }
-
-
-			                	
-			                	
-
-// 			                }
-// 			            });
-// 			        panel.add(starRater);
-// 			        frame.getContentPane().add(panel);
-// 			        frame.pack();
-// 			        frame.setVisible(true);
-// 			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			        
-			        
-			        
-			        
-// 					//storing the rating now in database
-			        
-			        
-			        
-			        			     
-			        
-// 				}
-				
-				
-				
-				
-
-				
-				
-								
-// 			}
-// 		});
-// 		btnNewButton.setBounds(321, 264, 117, 25);
-// 		frame.getContentPane().add(btnNewButton);
-		
-		
-		
-
-// 	}
-// }
-
 			}
 		});
 				
@@ -625,5 +397,4 @@ public class RateActivity {
 		   }
 		}
 	
-
 

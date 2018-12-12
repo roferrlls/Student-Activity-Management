@@ -1,4 +1,3 @@
-
 import java.awt.EventQueue;
 
 import java.awt.event.ActionEvent;
@@ -6,13 +5,6 @@ import java.awt.event.ActionListener;
 
 
 import javax.swing.JFrame;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
-import javax.swing.JEditorPane;
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,7 +20,9 @@ import java.awt.event.*;
 
 public class SwingMenuDemo {
    private JFrame mainFrame;
+   private JLabel headerLabel;
    private JLabel statusLabel;
+   private JPanel controlPanel; 
 
    public SwingMenuDemo(){
       prepareGUI();
@@ -38,24 +32,25 @@ public class SwingMenuDemo {
       swingMenuDemo.showMenuDemo();
    }
    private void prepareGUI(){
-      mainFrame = new JFrame("STUDENT ACTIVITY MANAGEMENT");
+      mainFrame = new JFrame("Java SWING Examples");
       mainFrame.setSize(800,800);
-      statusLabel = new JLabel("",JLabel.CENTER);
-      statusLabel.setBounds(0, 519, 800, 259);
+      mainFrame.setLayout(new GridLayout(3, 1));
+
+      headerLabel = new JLabel("",JLabel.CENTER );
+      statusLabel = new JLabel("",JLabel.CENTER);        
+      statusLabel.setSize(350,100);
       
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
-      });
-      mainFrame.getContentPane().setLayout(null);
-      mainFrame.getContentPane().add(statusLabel);
-      
-      JLabel lblNewLabel = new JLabel("New label");
-      Image img=new ImageIcon(this.getClass().getResource("/image.jpg")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img));
-      lblNewLabel.setBounds(0, 26, 800, 752);
-      mainFrame.getContentPane().add(lblNewLabel);
+      });    
+      controlPanel = new JPanel();
+      controlPanel.setLayout(new FlowLayout());
+
+      mainFrame.add(headerLabel);
+      mainFrame.add(controlPanel);
+      mainFrame.add(statusLabel);
       mainFrame.setVisible(true);  
    }
    public void showMenuDemo(){
