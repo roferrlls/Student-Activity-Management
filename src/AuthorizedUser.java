@@ -1,35 +1,36 @@
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JEditorPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
-public class Result {
+public class AuthorizedUser {
 
 	public JFrame frame;
+	public int flag;
+	String uid;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-
-	   //  Database credentials
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
 	   Connection conn = null;
-	   PreparedStatement stmt = null;
-	   PreparedStatement stmt1=null;
-	   public int Aid;
+	   Statement stmt = null;
+	   PreparedStatement stmt1 = null;
 
 	/**
 	 * Launch the application.
@@ -40,10 +41,11 @@ public class Result {
 
 	/**
 	 * Create the application.
-	 * @wbp.parser.entryPoint
 	 */
-	public Result(int id) {
-		Aid = id;
+	
+	
+	public AuthorizedUser(int val) {
+		flag = val;
 		initialize();
 	}
 
@@ -51,100 +53,113 @@ public class Result {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Results");
-		  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		    frame.setSize(screenSize.width, screenSize.height);
-		DefaultListModel<String> l1 = new DefaultListModel<>();   
-        try{
-		      //STEP 2: Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
-		 
-		      String query;
-		      query = "SELECT * from Evaluation where Aid = " + "?";
-		      stmt = conn.prepareStatement(query);
-		      stmt.setInt(1, Aid);
-		      ResultSet rs = stmt.executeQuery();
-		      while(rs.next()){
-			         //Retrieve by column name
-			        String score = rs.getString("Score");
-			        String pid = rs.getString("Pid");
-			        
-			        
-			         
-			        try{
-					     
-					      String sql;
-					      sql = "select * from Participant where Pid = " + "?";
-					      stmt1 = conn.prepareStatement(sql);
-					      stmt1.setString(1,pid);
-					      ResultSet rs1 = stmt1.executeQuery();
-					      
-					      while(rs1.next()){
-						         //Retrieve by column name
-						        String name = rs1.getString("Name");
-						        String finals = "";
-						        finals += name + "->" + score;
-						        System.out.println(finals);
-						        l1.addElement(finals);
-						        
-						       
-						      }
-					      
-					      
-					   }catch(SQLException se){
-					      //Handle errors for JDBC
-					      se.printStackTrace();
-					   }catch(Exception e){
-					      //Handle errors for Class.forName
-					      e.printStackTrace();
-					   }
-			       
-			      }
-		      rs.close();
-		      stmt.close();
-		      conn.close();
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }//end finally try
-		   }
-        JList<String> list = new JList<>(l1);  
-        list.setBounds(12,34, 721,510);  
-        frame.getContentPane().add(list);  
-		//frame.setBounds(100, 100, 800, 800);
+		frame = new JFrame();
+		//frame.setBounds(100, 100, 450, 300);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    frame.setSize(screenSize.width, screenSize.height);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnBack = new JButton("BACK");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+		JLabel lblRollno = new JLabel("USER ID");
+		lblRollno.setBounds(37, 30, 70, 15);
+		frame.getContentPane().add(lblRollno);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(37, 96, 70, 15);
+		frame.getContentPane().add(lblPassword);
+		
+		JEditorPane editorPane = new JEditorPane();
+		editorPane.setBounds(201, 24, 106, 21);
+		frame.getContentPane().add(editorPane);
+		
+		JEditorPane editorPane_1 = new JEditorPane();
+		editorPane_1.setBounds(201, 90, 106, 21);
+		frame.getContentPane().add(editorPane_1);
+		
+		JButton btnSubmit = new JButton("LOGIN");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String roll = editorPane.getText().toString();
+				uid = roll;
+				String password = editorPane_1.getText().toString();
+				String rpassword = "";
+				try{
+				      //STEP 2: Register JDBC driver
+				      Class.forName("com.mysql.jdbc.Driver");
+
+				      //STEP 3: Open a connection
+				      System.out.println("Connecting to database...");
+				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+				      stmt = conn.createStatement();
+
+				      //STEP 4: Execute a query
+				      System.out.println("Creating statement...");
+				      String sql;
+				      sql = "select password from AuthorizedUser where Uid = '" + roll+"'";
+				      ResultSet rs = stmt.executeQuery(sql);
+				      while(rs.next()) {
+				    	 rpassword = rs.getString(1);
+				    		  
+				      }
+				      stmt.close();
+				      conn.close();
+				   }catch(SQLException se){
+				      //Handle errors for JDBC
+				      se.printStackTrace();
+				   }catch(Exception ee){
+				      //Handle errors for Class.forName
+				      ee.printStackTrace();
+				   }finally{
+				      //finally block used to close resources
+				      try{
+				         if(stmt!=null)
+				            stmt.close();
+				      }catch(SQLException se2){
+				      }// nothing we can do
+				      try{
+				         if(conn!=null)
+				            conn.close();
+				      }catch(SQLException se){
+				         se.printStackTrace();
+				      }//end finally try
+				   }
+				if(password.equals(rpassword)) {
+					if(flag == 1) {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									addActivity window = new addActivity(uid);
+									window.frame.setVisible(true);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+					else if(flag == 2) {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									UpdateEventList window = new UpdateEventList(uid);
+									window.frame.setVisible(true);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(frame,"Invalid UserName or password");  
+					return;
+				}
+				
 			}
 		});
-		btnBack.setBounds(283, 637, 117, 25);
-		frame.getContentPane().add(btnBack);
+		btnSubmit.setBounds(120, 173, 187, 25);
+		frame.getContentPane().add(btnSubmit);
 		
 
 		JMenuBar menuBar = new JMenuBar();
@@ -203,7 +218,7 @@ public class Result {
 				      UpdateMenu.add(UpdateMenuItem);
 				      
 				      JMenuItem ActivityMenuItem3 = new JMenuItem("Login");
-				      ActivityMenuItem3.setActionCommand("Login");
+				      ActivityMenuItem3.setActionCommand("login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
 	}
@@ -288,7 +303,7 @@ public class Result {
 						});
 		    	  }
 		    	  
-		    	  else if(e.getActionCommand().equals("Login")){
+		    	  else if(e.getActionCommand().equals("login")){
 		    		  EventQueue.invokeLater(new Runnable() {
 		    				public void run() {
 		    					try {
@@ -304,5 +319,5 @@ public class Result {
 		      }        
 		   }
 	
-
+	
 }

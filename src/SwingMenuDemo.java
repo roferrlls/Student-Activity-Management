@@ -1,28 +1,18 @@
 import java.awt.EventQueue;
-import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 
 import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
-import javax.swing.JEditorPane;
+
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JComboBox;
+
 
 
 import java.awt.*;
@@ -63,7 +53,7 @@ public class SwingMenuDemo {
       mainFrame.add(statusLabel);
       mainFrame.setVisible(true);  
    }
-   private void showMenuDemo(){
+   public void showMenuDemo(){
       //create a menu bar
       final JMenuBar menuBar = new JMenuBar();
 
@@ -171,7 +161,7 @@ public class SwingMenuDemo {
 	    	  EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							addActivity window = new addActivity();
+							AuthorizedUser window = new AuthorizedUser(1);
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -197,7 +187,7 @@ public class SwingMenuDemo {
     		  EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							Verification window = new Verification();
+							AuthorizedUser window = new AuthorizedUser(2);
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
