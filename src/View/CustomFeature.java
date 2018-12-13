@@ -1,35 +1,35 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JEditorPane;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
+
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
-
-import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
-import javax.swing.JButton;
-import java.awt.Color;
-
-import java.awt.Dimension;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-
-
-public class AssignMarks {
+public class CustomFeature {
 
 	public JFrame frame;
-	public int Aid;
+	public int Aid  ;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
@@ -37,24 +37,36 @@ public class AssignMarks {
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
 	   Connection conn = null;
-	   PreparedStatement stmt = null;
-	   public String jEmail;
+	   Statement stmt = null;
+	   PreparedStatement stmt1 = null;
+
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					CustomFeature window = new CustomFeature(11);
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 	}
 
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public AssignMarks(int id,String email) {
-		Aid = id;
-		jEmail = email;
+	public CustomFeature(int val) {
+		Aid=val;
+		System.out.println(Aid);
 		initialize();
+		
 	}
 
 	/**
@@ -63,103 +75,59 @@ public class AssignMarks {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 192, 203));
-
-	//	frame.setBounds(100, 100, 800, 800);
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
-		//frame.setBounds(100, 100, 800, 800);
-
+		//frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblParticipant = new JLabel("Participant");
-		lblParticipant.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblParticipant.setHorizontalAlignment(SwingConstants.CENTER);
-		lblParticipant.setBounds(415, 66, 100, 15);
-		frame.getContentPane().add(lblParticipant);
-		String str[] = new String[1000]; 
-		
-		try{
-		      //STEP 2: Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
-		      String sql;
-		      sql = "select Pid from Enrolls where Aid= " + "?";
-		      stmt = conn.prepareStatement(sql);
-		      stmt.setInt(1,Aid);
-		      ResultSet rs = stmt.executeQuery();
-		      int count = 0;
-		      while(rs.next()){
-			         //Retrieve by column name
-			        str[count] = rs.getString("Pid");
-			        count++;
-			  }
-		      rs.close();
-		      stmt.close();
-		      conn.close();
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }
-		   }//end finally try
-		      JComboBox comboBox = new JComboBox(str);
-		comboBox.setBounds(719, 55, 307, 38);
-		frame.getContentPane().add(comboBox);
-		
-		JLabel lblScore = new JLabel("Score");
-		lblScore.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(415, 140, 70, 15);
-		frame.getContentPane().add(lblScore);
-		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(719, 132, 307, 38);
+		editorPane.setBounds(751, 24, 260, 40);
 		frame.getContentPane().add(editorPane);
 		
-
-	//	JButton btnSubmitScore = new JButton("SUBMIT SCORE");
-
-		JLabel lblNewLabel = new JLabel("Review");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(430, 184, 70, 59);
+		JLabel lblNewLabel = new JLabel("Constaint");
+		lblNewLabel.setBounds(431, 30, 70, 15);
 		frame.getContentPane().add(lblNewLabel);
 		
+		String[] val= {"String","Integer"};
+		JComboBox comboBox = new JComboBox(val);
+		comboBox.setBounds(751, 103, 260, 24);
+		frame.getContentPane().add(comboBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("Data Type");
+		lblNewLabel_1.setBounds(431, 108, 116, 15);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Value");
+		lblNewLabel_2.setBounds(431, 194, 70, 15);
+		frame.getContentPane().add(lblNewLabel_2);
 		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(719, 205, 307, 38);
+		editorPane_1.setBounds(751, 194, 260, 40);
 		frame.getContentPane().add(editorPane_1);
-		System.out.println(Aid);
 		
-		
-		JButton btnSubmitScore = new JButton("SUBMIT");
-
-		btnSubmitScore.setBackground(new Color(135, 206, 235));
-		btnSubmitScore.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				try{
+		JButton btnSubmit = new JButton("SUBMIT");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String constraint = editorPane.getText().toString();
+				if(constraint.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"Name field is empty");  
+					return;
+				}
+				String datatype = String.valueOf(comboBox.getSelectedItem());
+				if(datatype=="Integer")
+				{
+					datatype="int";
+				}
+				else
+				{
+					datatype="VARCHAR(50)";
+				}
+				String value = editorPane_1.getText().toString();
+				if(value.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"Name field is empty");  
+					return;
+				}
+				 try{
 				      //STEP 2: Register JDBC driver
 				      Class.forName("com.mysql.jdbc.Driver");
 
@@ -169,41 +137,37 @@ public class AssignMarks {
 
 				      //STEP 4: Execute a query
 				      System.out.println("Creating statement...");
-				      String pid = String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));  
-				      System.out.println(pid);
+				      stmt = conn.createStatement();
 				      String sql;
-				      String score = editorPane.getText().toString();
-				      String review =editorPane_1.getText().toString();
-				      int val = Integer.parseInt(score);
-				      if(score.length()==0 || review.length()==0)
+				      System.out.println(constraint + " "  +datatype);
+				      sql = "alter table Activity add " +constraint+ " " +datatype;
+				      stmt.execute(sql);
+				      System.out.println(constraint + " "  +Aid);
+				      sql="update Activity set " + constraint + " = (?) where Aid = (?)";
+				  
+				      stmt1 = conn.prepareStatement(sql);
+				      if(datatype=="int")
 				      {
-				    	  JOptionPane.showMessageDialog(frame,"field is empty");
-				    	  return;
+				    	  int num = Integer.parseInt(value);
+				    	  stmt1.setInt(1,num);
+					      stmt1.setInt(2, Aid);
 				      }
 				      else
 				      {
-				    	  sql = "insert into Evaluation " + "values(?,?,?,?,?)";
-					      stmt = conn.prepareStatement(sql);
-					      stmt.setInt(1,Aid);
-					      stmt.setString(2,pid);
-					      stmt.setString(3,jEmail);
-					      stmt.setInt(4,val);
-					      stmt.setString(5, review);
-					      
-					      stmt.execute();
-					  
-					      stmt.close();
-					      conn.close();
-					      JOptionPane.showMessageDialog(frame,"submitted successfully");
-				    	  
+				    	  stmt1.setString(1,value);
+					      stmt1.setInt(2, Aid);
 				      }
-				      
+				      stmt1.executeUpdate();
+				      stmt1.close();
+				      stmt.close();
+				      conn.close();
+
 				   }catch(SQLException se){
 				      //Handle errors for JDBC
 				      se.printStackTrace();
-				   }catch(Exception e){
+				   }catch(Exception ee){
 				      //Handle errors for Class.forName
-				      e.printStackTrace();
+				      ee.printStackTrace();
 				   }finally{
 				      //finally block used to close resources
 				      try{
@@ -216,28 +180,19 @@ public class AssignMarks {
 				            conn.close();
 				      }catch(SQLException se){
 				         se.printStackTrace();
-				      }
+				      }//end finally try
 				   }
-				
-				editorPane.setText("");
-				editorPane_1.setText("");
-			}
-		});	
-		btnSubmitScore.setBounds(479, 309, 153, 25);
-		frame.getContentPane().add(btnSubmitScore);
-		
-		JButton btnDone = new JButton("DONE");
-		btnDone.setBackground(new Color(135, 206, 235));
-		btnDone.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+				 JOptionPane.showMessageDialog(frame,"Submited successfully");
+					editorPane.setText("");
+					editorPane_1.setText("");
+					
 			}
 		});
-		btnDone.setBounds(816, 309, 117, 25);
-		frame.getContentPane().add(btnDone);
+		btnSubmit.setBounds(592, 310, 117, 25);
+		frame.getContentPane().add(btnSubmit);
+		
 		
 		final JMenuBar menuBar = new JMenuBar();
-		menuBar.setForeground(Color.WHITE);
 		menuBar.setBackground(Color.BLACK);
 		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
@@ -304,9 +259,8 @@ public class AssignMarks {
 			      ActivityMenuItem3.addActionListener(menuItemListener);
 			      ParticipantMenu.add(ActivityMenuItem3);
 		
-		
-		
 	}
+
 	
 	
 	 class MenuItemListener implements ActionListener {
@@ -403,4 +357,5 @@ public class AssignMarks {
 	      
 	      }        
 	   }
+
 }

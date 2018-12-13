@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -71,6 +72,7 @@ public class CustomFeature {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 192, 203));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		//frame.setBounds(100, 100, 450, 300);
@@ -78,27 +80,27 @@ public class CustomFeature {
 		frame.getContentPane().setLayout(null);
 		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(209, 24, 106, 21);
+		editorPane.setBounds(751, 24, 260, 40);
 		frame.getContentPane().add(editorPane);
 		
 		JLabel lblNewLabel = new JLabel("Constaint");
-		lblNewLabel.setBounds(30, 30, 70, 15);
+		lblNewLabel.setBounds(431, 30, 70, 15);
 		frame.getContentPane().add(lblNewLabel);
 		
 		String[] val= {"String","Integer"};
 		JComboBox comboBox = new JComboBox(val);
-		comboBox.setBounds(209, 67, 116, 24);
+		comboBox.setBounds(751, 103, 260, 24);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblNewLabel_1 = new JLabel("Data Type");
-		lblNewLabel_1.setBounds(30, 72, 116, 15);
+		lblNewLabel_1.setBounds(431, 108, 116, 15);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Value");
-		lblNewLabel_2.setBounds(30, 135, 70, 15);
+		lblNewLabel_2.setBounds(431, 194, 70, 15);
 		frame.getContentPane().add(lblNewLabel_2);
 		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(209, 121, 106, 21);
+		editorPane_1.setBounds(751, 194, 260, 40);
 		frame.getContentPane().add(editorPane_1);
 		
 		JButton btnSubmit = new JButton("SUBMIT");
@@ -184,20 +186,27 @@ public class CustomFeature {
 					
 			}
 		});
-		btnSubmit.setBounds(129, 194, 117, 25);
+		btnSubmit.setBounds(592, 310, 117, 25);
 		frame.getContentPane().add(btnSubmit);
 		
 		
 		final JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.BLACK);
+		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
 //			      //create menus
 			      JMenu ActivityMenu = new JMenu(" Activity");
+			      ActivityMenu.setForeground(Color.WHITE);
 //			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
 //			      final JMenu pastMenu = new JMenu("Past Activity");
 			      final JMenu ParticipantMenu = new JMenu("My account");
+			      ParticipantMenu.setForeground(Color.WHITE);
 			      final JMenu AddMenu = new JMenu("Add Activity");
+			      AddMenu.setForeground(Color.WHITE);
 			      final JMenu JudgeMenu = new JMenu("Judge Portal");
+			      JudgeMenu.setForeground(Color.WHITE);
 			      final JMenu UpdateMenu = new JMenu("Update Activity");
+			      UpdateMenu.setForeground(Color.WHITE);
 			     
 			      menuBar.add(ActivityMenu);
 //			      menuBar.add(upcomingMenu);

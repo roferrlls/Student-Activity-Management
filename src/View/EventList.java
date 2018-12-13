@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -109,20 +111,25 @@ public class EventList {
 			      String sql;
 			      sql = "SELECT * from Activity where Date = CURDATE()";
 			      ResultSet rs = stmt.executeQuery(sql);
-			      
-			      if(!rs.next())
+			      Boolean v=rs.next();
+			      if(!v)
 			      {
 			    	  flag=true;
+			    	
 			    	   
 			    	//  return;
 			      }
-			      while(rs.next()){
+			      while(v){
+			    	  
 				         //Retrieve by column name
+			    	  System.out.println( "HI");
 				        String name = rs.getString("Name");
 				        int id = rs.getInt("Aid");
-				         System.out.println( id);
+				         
 				         String str = "(" + id + ")" + " " + name;
+				         System.out.println( str);
 				         l1.addElement(str);
+				         v=rs.next();
 				       
 				      }
 			      
@@ -189,7 +196,7 @@ public class EventList {
 			btnViewDetails.setBounds(898, 489, 269, 43);
 			frame.getContentPane().add(btnViewDetails);
 			
-			String[] str = {"LC","Quizzinga"};
+			String[] str = {"LC","Quizzinga","Astro","Insignia","Cricket","Chess"};
 			JComboBox comboBox = new JComboBox(str);
 			comboBox.setForeground(UIManager.getColor("TextField.caretForeground"));
 			comboBox.setBackground(UIManager.getColor("TabbedPane.shadow"));
@@ -254,6 +261,7 @@ public class EventList {
 			        list = new JList<>(l1);  
 			        list.setBounds(12,34, 721,510);  
 			        frame.getContentPane().add(list);
+			        list.setOpaque(false);
 				}
 			});
 			
@@ -269,7 +277,7 @@ public class EventList {
 			btnFilterB.setBounds(476, 498, 214, 25);
 			frame.getContentPane().add(btnFilterB);
 			
-			String[] dept = {"CSE","ECE"};
+			String[] dept = {"CSE","ECE","CCE","ME"};
 			JComboBox comboBox_1 = new JComboBox(dept);
 			comboBox_1.setBackground(UIManager.getColor("TextArea.selectionBackground"));
 			comboBox_1.setBounds(156, 580, 134, 24);
@@ -278,6 +286,66 @@ public class EventList {
 			
 			JButton button = new JButton("Filter By Dept");
 			button.setBackground(UIManager.getColor("ComboBox.buttonDarkShadow"));
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					l1.clear();
+					list = new JList<>(l1);  
+			        try{
+					      //STEP 2: Register JDBC driver
+					      Class.forName("com.mysql.jdbc.Driver");
+
+
+					      //STEP 3: Open a connection
+					      System.out.println("Connecting to database...");
+					      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+					      //STEP 4: Execute a query
+					      System.out.println("Creating statement...");
+					      String club = String.valueOf(comboBox_1.getItemAt(comboBox_1.getSelectedIndex()));
+					      String query = "SELECT * from Activity where Department = " + "?" + " and Date = CURDATE()";
+					      stmt1 = conn.prepareStatement(query);
+					      stmt1.setString(1, club);
+					      ResultSet rs = stmt1.executeQuery();
+					  
+					      while(rs.next()){
+						         //Retrieve by column name
+						        String name = rs.getString("Name");
+						        int id = rs.getInt("Aid");
+						         System.out.println( name);
+						         String str = "(" + id + ")" + " " + name;
+						         l1.addElement(str);
+						       
+						      }
+					      rs.close();
+					      stmt.close();
+					      conn.close();
+					   }catch(SQLException se){
+					      //Handle errors for JDBC
+					      se.printStackTrace();
+					   }catch(Exception e){
+					      //Handle errors for Class.forName
+					      e.printStackTrace();
+					   }finally{
+					      //finally block used to close resources
+					      try{
+					         if(stmt!=null)
+					            stmt.close();
+					      }catch(SQLException se2){
+					      }// nothing we can do
+					      try{
+					         if(conn!=null)
+					            conn.close();
+					      }catch(SQLException se){
+					         se.printStackTrace();
+					      }//end finally try
+					   }
+			        list = new JList<>(l1);  
+			        list.setBounds(12,34, 721,510);  
+			        frame.getContentPane().add(list);
+			        list.setOpaque(false);
+				}
+			});
+			
 			button.setBounds(476, 580, 214, 25);
 			frame.getContentPane().add(button);
 			

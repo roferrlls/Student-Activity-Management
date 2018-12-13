@@ -1,3 +1,4 @@
+package View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,18 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
-import javax.swing.JEditorPane;
+
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import javax.swing.JPanel;
 
 
 
@@ -39,6 +35,7 @@ public class SwingMenuDemo {
    }
    private void prepareGUI(){
       mainFrame = new JFrame("STUDENT ACTIVITY MANAGEMENT");
+      mainFrame.setBackground(new Color(0, 0, 0));
       //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    mainFrame.setSize(screenSize.width, screenSize.height);
       statusLabel = new JLabel("",JLabel.CENTER);
@@ -53,6 +50,8 @@ public class SwingMenuDemo {
       mainFrame.getContentPane().add(statusLabel);
       
       JLabel lblNewLabel = new JLabel("New label");
+      lblNewLabel.setBackground(new Color(0, 0, 0));
+      lblNewLabel.setLocation(0, -19);
       Image img=new ImageIcon(this.getClass().getResource("/img1.jpg")).getImage();
 	lblNewLabel.setIcon(new ImageIcon(img));
 	//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -161,7 +160,7 @@ public class SwingMenuDemo {
 							EventList window = new EventList();
 							window.frame.setVisible(true);
 						} catch (Exception e) {
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 					}
 				});

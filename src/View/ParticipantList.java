@@ -1,61 +1,60 @@
+package View;
+
+import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JList;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import javax.swing.JEditorPane;
-import java.awt.Color;
-import java.awt.Dimension;
 
-public class Features implements ActionListener{
+public class ParticipantList {
 
+	
 	public JFrame frame;
-	public static int Aid;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-	   JComboBox comboBox;
-	   String value = "";
-	   public String x;
-	   JLabel lblNewLabel;
+	   Boolean flag=false;
 	   //  Database credentials
+
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
+
 	   Connection conn = null;
 	   Statement stmt = null;
-	   PreparedStatement stmt1 = null;
-
+	   public int Aid;
+	   public String Pid;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
-
 	}
 
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public Features(int val) {
-		Aid = val+1;
+	public ParticipantList(int id) {
+		Aid=id;
 		initialize();
 	}
 
@@ -63,42 +62,44 @@ public class Features implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("ParticipantList");
 		frame.getContentPane().setBackground(new Color(255, 192, 203));
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
 		//frame.setBounds(100, 100, 800, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		String[] val = new String[100];
-		
-		
-		try{
+
+		DefaultListModel<String> l1 = new DefaultListModel<>();   
+        try{
 		      //STEP 2: Register JDBC driver
 		      Class.forName("com.mysql.jdbc.Driver");
 
 		      //STEP 3: Open a connection
 		      System.out.println("Connecting to database...");
 		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		      stmt = conn.createStatement();
 
 		      //STEP 4: Execute a query
 		      System.out.println("Creating statement...");
+		      stmt = conn.createStatement();
 		      String sql;
-		      sql = "select distinct column_name from information_schema.columns where table_name='Activity'";
-		      int count = 0;
-		      int j = 0;
+		      sql = "SELECT Pid from Enrolls where Aid="+Aid;
 		      ResultSet rs = stmt.executeQuery(sql);
-		      while(rs.next()) {
-		    	  count++;
-		    	  String str = rs.getString(1);
-		    	  if(count > 12) {
-		    		  val[j] = str;
-		    		  j++;
-		    	  }
-		    		  
+		      
+		      Boolean v=rs.next();
+		      if(!v)
+		      {
+		    	  flag=true;
 		      }
+		      
+		      while(v){
+			         //Retrieve by column name
+			        String name = rs.getString("Pid");
+			        
+			         l1.addElement(name);
+			         v=rs.next();
+			       
+			      }
+		      rs.close();
 		      stmt.close();
 		      conn.close();
 		   }catch(SQLException se){
@@ -121,140 +122,51 @@ public class Features implements ActionListener{
 		         se.printStackTrace();
 		      }//end finally try
 		   }
-		comboBox = new JComboBox(val);
-		comboBox.setBounds(178, 38, 257, 24);
-		frame.getContentPane().add(comboBox);
-		comboBox.addActionListener(this);
-		
-		
-		
-		JButton btnAddCustomFeatures = new JButton("ADD CUSTOM FEATURES");
-		btnAddCustomFeatures.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							CustomFeature window = new CustomFeature(Aid);
-							window.frame.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			}
-		});
-		btnAddCustomFeatures.setBounds(178, 433, 239, 25);
-		frame.getContentPane().add(btnAddCustomFeatures);
-		x="Seats";
-		
-		lblNewLabel = new JLabel("Seats");
-		lblNewLabel.setBounds(48, 98, 143, 60);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(269, 122, 106, 24);
-		frame.getContentPane().add(editorPane);
-		
-		JButton btnNewButton = new JButton("SAVE");
+        JList<String> list = new JList<>(l1);  
+        list.setBounds(12,34, 1276,510);  
+        list.setOpaque(false);
+        frame.getContentPane().add(list);  
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		JButton btnNewButton = new JButton("BACK");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				value = editorPane.getText().toString();
-				try{
-				      //STEP 2: Register JDBC driver
-				      Class.forName("com.mysql.jdbc.Driver");
-
-				      //STEP 3: Open a connection
-				      System.out.println("Connecting to database...");
-				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-				      //STEP 4: Execute a query
-				      System.out.println("Creating statement...");
-				      stmt = conn.createStatement();
-				      String sql;
-				      String sql1;
-				      sql1="select data_type from information_schema.columns where table_name='Activity' and column_name = '" + x+"'";      
-				      System.out.println(x);
-				      //stmt1.setString(2,x);
-				      ResultSet rs = stmt.executeQuery(sql1);
-				      String datatype = "";
-				      while(rs.next()) {
-				    	  datatype = rs.getString(1);
-				      }
-				      System.out.println(datatype);
-				      sql = "update Activity set " +x+" = (?) where Aid = (?)";
-				      
-				      stmt1 = conn.prepareStatement(sql);
-				      if(datatype=="int")
-				      {
-				    	  try {
-					    	  int num = Integer.parseInt(value);
-					    	  stmt1.setInt(1,num);
-						      stmt1.setInt(2, Aid);
-				    	  }catch(Exception ee) {
-				    		  JOptionPane.showMessageDialog(frame,"Enter integer value please");  
-								return;
-				    	  }
-				      }
-				      else
-				      {
-				    	  stmt1.setString(1,value);
-					      stmt1.setInt(2, Aid);
-				      }
-				      stmt1.executeUpdate();
-				      stmt.close();
-				      conn.close();
-				   }catch(SQLException se){
-				      //Handle errors for JDBC
-					   JOptionPane.showMessageDialog(frame,"Enter integer value please");  
-				      se.printStackTrace();
-				      return;
-				   }catch(Exception ee){
-				      //Handle errors for Class.forName
-				      ee.printStackTrace();
-				   }finally{
-				      //finally block used to close resources
-				      try{
-				         if(stmt!=null)
-				            stmt.close();
-				      }catch(SQLException se2){
-				      }// nothing we can do
-				      try{
-				         if(conn!=null)
-				            conn.close();
-				      }catch(SQLException se){
-				         se.printStackTrace();
-				      }//end finally try
-				   }
-				JOptionPane.showMessageDialog(frame,"Submited successfully");
-				editorPane.setText("");
-				
+				frame.dispose();
 			}
-				
 		});
-		btnNewButton.setBounds(508, 126, 117, 25);
+		btnNewButton.setBounds(591, 570, 275, 43);
 		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnAddJudge = new JButton("ADD JUDGE");
-		btnAddJudge.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnNewButton_1 = new JButton("View Details");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							JudgeDetails window = new JudgeDetails(Aid);
+							Pid= list.getSelectedValue();
+
+							ParticipantDetails window = new ParticipantDetails(Pid);
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				});
+				
+				
+				
 			}
 		});
-		btnAddJudge.setBounds(226, 275, 117, 25);
-		frame.getContentPane().add(btnAddJudge);
-		
+		btnNewButton_1.setBounds(115, 570, 275, 43);
+		frame.getContentPane().add(btnNewButton_1);
+
+	//}
+
 		
 
 		JMenuBar menuBar = new JMenuBar();
+		//JMenuBar menuBar = new JMenuBar();
+		menuBar.setForeground(Color.WHITE);
 		menuBar.setBackground(Color.BLACK);
 		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
@@ -320,9 +232,11 @@ public class Features implements ActionListener{
 				      ActivityMenuItem3.setActionCommand("Login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
-		
-		
-		
+				      
+				      if(flag)
+				      {
+				    	  JOptionPane.showMessageDialog(frame,"There Are no Participants"); 
+				      }
 	}
 	
 	   
@@ -421,15 +335,4 @@ public class Features implements ActionListener{
 		      }        
 		   }
 	
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		x = String.valueOf(comboBox.getSelectedItem());
-		System.out.println(x);
-		lblNewLabel.setText(x);		
-		
-		
-	}
 }
