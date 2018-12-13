@@ -1,78 +1,51 @@
+package View;
+
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-
-import javax.swing.JList;
-
-import java.awt.Dimension;
-
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JComboBox;
-
-public class PartcipantForm {
+public class MyAccount {
 
 	public JFrame frame;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
-
-	   //  Database credentials
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
 	   Connection conn = null;
-	   PreparedStatement stmt = null;
-	   public int Aid;
-	   public String Pid;
-	   public String pass=null;
-	   private JPasswordField passwordField;
+	   Statement stmt = null;
+	   PreparedStatement stmt1 = null;
+	   String roll_no;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		 EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						PartcipantForm window = new PartcipantForm();
-						window.frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+		
 	}
 
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public PartcipantForm(int Aid,String Pid) {
-		this.Aid = Aid;
-		this.Pid = Pid;
-		initialize();
-	}
-	
-	public PartcipantForm() {
-		//this.Aid = Aid;
-		//this.Pid = Pid;
+	public MyAccount(String val) {
+		roll_no = val;
 		initialize();
 	}
 
@@ -83,72 +56,124 @@ public class PartcipantForm {
 		frame = new JFrame();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
-		//frame.setBounds(100, 100, 800, 800);
+		//frame.setBounds(800, 800, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblRollNo = new JLabel("Roll No.");
-		lblRollNo.setBounds(48, 31, 70, 15);
-		frame.getContentPane().add(lblRollNo);
-		
-		JEditorPane editorPane_3 = new JEditorPane();
-		editorPane_3.setBounds(313, 12, 178, 21);
-		frame.getContentPane().add(editorPane_3);
-		
-		
-		
-		JLabel lblEmail = new JLabel("EMAIL");
-		lblEmail.setFont(new Font("Serif", Font.PLAIN, 14));
-
-		lblEmail.setBounds(48, 58, 208, 28);
-		frame.getContentPane().add(lblEmail);
-		
-		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(310, 58, 181, 21);
-		frame.getContentPane().add(editorPane_1);
-		
-		JLabel lblName = new JLabel("NAME");
-		lblName.setToolTipText("");
-		lblName.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblName.setBounds(48, 97, 208, 28);
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(42, 36, 70, 15);
 		frame.getContentPane().add(lblName);
 		
-		JEditorPane editorPane_2 = new JEditorPane();
-		editorPane_2.setBounds(310, 97, 181, 21);
-		frame.getContentPane().add(editorPane_2);
+		JLabel lblContact = new JLabel("Contact");
+		lblContact.setBounds(42, 79, 70, 15);
+		frame.getContentPane().add(lblContact);
 		
-		JLabel lblNewLabel = new JLabel("PHONE NUMBER");
-		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblNewLabel.setBounds(48, 136, 154, 29);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(42, 114, 70, 15);
+		frame.getContentPane().add(lblEmail);
 		
-		JLabel lblNewLabel_1 = new JLabel("BATCH");
-		lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(48, 191, 90, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblBatch = new JLabel("Batch");
+		lblBatch.setBounds(42, 158, 70, 15);
+		frame.getContentPane().add(lblBatch);
 		
-		JLabel lblPassword = new JLabel("PASSWORD");
-		lblPassword.setFont(new Font("Serif", Font.PLAIN, 14));
-		lblPassword.setBounds(48, 244, 90, 14);
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(31, 201, 70, 15);
 		frame.getContentPane().add(lblPassword);
 		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(310, 145, 183, 20);
+		editorPane.setBounds(226, 30, 106, 21);
 		frame.getContentPane().add(editorPane);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(310, 239, 109, 21);
-		frame.getContentPane().add(passwordField);
+		JEditorPane editorPane_1 = new JEditorPane();
+		editorPane_1.setBounds(226, 73, 106, 21);
+		frame.getContentPane().add(editorPane_1);
 		
-		String batch[]= {"Y15","Y16","Y17","Y18","PG"};
-		JComboBox comboBox = new JComboBox(batch);
-		comboBox.setBounds(310, 190, 57, 20);
-		frame.getContentPane().add(comboBox);
+		JEditorPane editorPane_2 = new JEditorPane();
+		editorPane_2.setBounds(226, 108, 106, 21);
+		frame.getContentPane().add(editorPane_2);
 		
+		JEditorPane editorPane_3 = new JEditorPane();
+		editorPane_3.setBounds(226, 152, 106, 21);
+		frame.getContentPane().add(editorPane_3);
 		
-		JButton btnSubmit = new JButton("REGISTER");
+		JEditorPane editorPane_4 = new JEditorPane();
+		editorPane_4.setBounds(226, 185, 106, 21);
+		frame.getContentPane().add(editorPane_4);
+		try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		      System.out.println("Connecting to database...");
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		      stmt = conn.createStatement();
+
+		      //STEP 4: Execute a query
+		      System.out.println("Creating statement...");
+		      String sql;
+		      sql = "select * from Participant where Pid = '" + roll_no+"'";
+		      ResultSet rs = stmt.executeQuery(sql);
+		      while(rs.next()) {
+		    	  editorPane.setText(rs.getString(3));
+		    	  editorPane_1.setText(rs.getString(4));
+		    	  editorPane_2.setText(rs.getString(2));
+		    	  editorPane_3.setText(rs.getString(5));
+		    	  editorPane_4.setText(rs.getString(6));
+		    		  
+		      }
+		      rs.close();
+		      stmt.close();
+		      conn.close();
+		   }catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   }catch(Exception ee){
+		      //Handle errors for Class.forName
+		      ee.printStackTrace();
+		   }finally{
+		      //finally block used to close resources
+		      try{
+		         if(stmt!=null)
+		            stmt.close();
+		      }catch(SQLException se2){
+		      }// nothing we can do
+		      try{
+		         if(conn!=null)
+		            conn.close();
+		      }catch(SQLException se){
+		         se.printStackTrace();
+		      }//end finally try
+		   }
+		
+		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				String name = editorPane.getText().toString();
+				String contact = editorPane_1.getText().toString();
+				String email = editorPane_2.getText().toString();
+				String batch = editorPane_3.getText().toString();
+				String password = editorPane_4.getText().toString();
+				if(name.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"Name field is empty");  
+					return;
+				}
+				if(contact.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"contact field is empty");  
+					return;
+				}
+				if(email.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"email field is empty");  
+					return;
+				}
+				if(batch.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"batch field is empty");  
+					return;
+				}
+				if(password.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"password Audience field is empty");  
+					return;
+				}
+				
 				try{
 				      //STEP 2: Register JDBC driver
 				      Class.forName("com.mysql.jdbc.Driver");
@@ -156,80 +181,30 @@ public class PartcipantForm {
 				      //STEP 3: Open a connection
 				      System.out.println("Connecting to database...");
 				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
 				      //STEP 4: Execute a query
 				      System.out.println("Creating statement...");
-				      String roll = editorPane_3.getText().toString();
-				      String email = editorPane_1.getText().toString();
-				      String name =  editorPane_2.getText().toString();
-				      String phno = editorPane.getText().toString();
-				      int contact;
-				      try {
-				    	  contact = Integer.parseInt(phno);
-				      }catch(NumberFormatException ee) {
-				    	  JOptionPane.showMessageDialog(frame,"Contact Field Is Invalid");  
-							return;
-				      }
-					  String batch= String.valueOf(comboBox.getItemAt(comboBox.getSelectedIndex()));
-					  pass = new String(passwordField.getPassword());
-					  
-					  if(name.length() == 0) {
-							JOptionPane.showMessageDialog(frame,"Name field is empty");  
-							return;
-						}
-						if(roll.length() == 0) {
-							JOptionPane.showMessageDialog(frame,"roll number field is empty");  
-							return;
-						}
-						if(email.length() == 0) {
-							JOptionPane.showMessageDialog(frame,"email field is empty");  
-							return;
-						}
-						if(phno.length() != 10) {
-							JOptionPane.showMessageDialog(frame,"phone number field is invalid");  
-							return;
-						}
-						if(batch.length() == 0) {
-							JOptionPane.showMessageDialog(frame,"batch field is empty");  
-							return;
-						}
-						if(pass.length() < 8) {
-							JOptionPane.showMessageDialog(frame,"password is weak");  
-							return;
-						}
-
-				      String query = "insert into Participant values (?,?,?,?,?,?)";
-				      stmt = conn.prepareStatement(query);
 				      
-				      stmt.setString(1, roll);
-				      stmt.setString(2, email);
-				      stmt.setString(3, name);
-				      stmt.setInt(4, contact);
-				      stmt.setString(5, batch);
-				      stmt.setString(6, pass);
-				      stmt.execute();
-//				      
-//				      String sql = "insert into Enrolls (Aid,Pid) values(?,?)";
-//			    	  stmt = conn.prepareStatement(sql);
-//				      
-//				      stmt.setInt(1, Aid);
-//				      stmt.setString(2, Pid);
-//				      stmt.execute();	  
-//				    	  
-				     
+				      String query = "update Participant set Name ='" + name + "' , Email='" + email + "' ,Batch= '" + batch + "' ,PhoneNumber= '" + contact + "' ,Password ='" + password + "' where Pid ='" +roll_no+ "'";
+				      stmt = conn.createStatement();	      
+				      stmt.executeUpdate(query);
 				      
 				      stmt.close();
 				      conn.close();
 				   }catch(SQLException se){
 				      //Handle errors for JDBC
 				      se.printStackTrace();
-				   }catch(Exception e){
+				   }catch(Exception ee){
 				      //Handle errors for Class.forName
-				      e.printStackTrace();
+				      ee.printStackTrace();
 				   }finally{
 				      //finally block used to close resources
 				      try{
-				         if(stmt!=null)
+				         if(stmt!=null) {
+				         
 				            stmt.close();
+				         }   
+				         	
 				      }catch(SQLException se2){
 				      }// nothing we can do
 				      try{
@@ -239,17 +214,31 @@ public class PartcipantForm {
 				         se.printStackTrace();
 				      }//end finally try
 				   }
-				JOptionPane.showMessageDialog(frame,"Successfully Registered");  
-
-				frame.dispose();
-
+				JOptionPane.showMessageDialog(frame,"Updates Have been registered");  
+				
 			}
-		});	
-		btnSubmit.setBounds(147, 313, 163, 25);
+		});
+		btnSubmit.setBounds(119, 261, 117, 25);
 		frame.getContentPane().add(btnSubmit);
 		
+		JButton btnNewButton = new JButton("My Registered Activity");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							MyActivity window = new MyActivity(roll_no);
+							window.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		btnNewButton.setBounds(101, 330, 211, 25);
+		frame.getContentPane().add(btnNewButton);
 		
-
 
 		JMenuBar menuBar = new JMenuBar();
 		//
@@ -310,7 +299,6 @@ public class PartcipantForm {
 				      ActivityMenuItem3.setActionCommand("Login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
-		
 	}
 	
 	   
@@ -408,4 +396,5 @@ public class PartcipantForm {
 		      
 		      }        
 		   }
+
 }

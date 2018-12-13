@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -22,6 +24,9 @@ import javax.swing.JMenuItem;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Scrollbar;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
 
 
 public class UpcomingEvent {
@@ -116,13 +121,17 @@ public class UpcomingEvent {
 		      }//end finally try
 		   }
         JList<String> list = new JList<>(l1);  
-        list.setBackground(new Color(255, 250, 205));
-        list.setBounds(12,34, 721,510);  
+        list.setBackground(new Color(255, 228, 225));
+       // list.setBackground(new Color(255, 250, 205));
+        list.setOpaque(false);
+        list.getSelectionBackground();
+        list.setBounds(12,34, 1272,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnViewDetails = new JButton("VIEW DETAILS");
+		btnViewDetails.setBackground(UIManager.getColor("Button.focus"));
 		btnViewDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -146,7 +155,7 @@ public class UpcomingEvent {
 				});
 			}
 		});	
-		btnViewDetails.setBounds(203, 625, 274, 43);
+		btnViewDetails.setBounds(531, 526, 274, 43);
 		frame.getContentPane().add(btnViewDetails);
 		JButton btnNewButton = new JButton("BACK");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -154,20 +163,38 @@ public class UpcomingEvent {
 				frame.dispose();
 			}
 		});
-		btnNewButton.setBounds(202, 677, 275, 43);
+		btnNewButton.setBounds(531, 581, 275, 43);
 		frame.getContentPane().add(btnNewButton);
 		
+		Scrollbar scrollbar = new Scrollbar();
+		scrollbar.setBounds(1290, 10, 17, 668);
+		frame.getContentPane().add(scrollbar);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(0, 0, 1317, 690);
+		frame.getContentPane().add(lblNewLabel);
+		Image img=new ImageIcon(this.getClass().getResource("/img2.jpg")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(img));
+		lblNewLabel.setSize(screenSize.width, screenSize.height-100);
 		
 		final JMenuBar menuBar = new JMenuBar();
+		menuBar.setForeground(Color.WHITE);
+		menuBar.setBackground(Color.BLACK);
+		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
 //			      //create menus
 			      JMenu ActivityMenu = new JMenu(" Activity");
+			      ActivityMenu.setForeground(Color.WHITE);
 //			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
 //			      final JMenu pastMenu = new JMenu("Past Activity");
 			      final JMenu ParticipantMenu = new JMenu("My account");
+			      ParticipantMenu.setForeground(Color.WHITE);
 			      final JMenu AddMenu = new JMenu("Add Activity");
+			      AddMenu.setForeground(Color.WHITE);
 			      final JMenu JudgeMenu = new JMenu("Judge Portal");
+			      JudgeMenu.setForeground(Color.WHITE);
 			      final JMenu UpdateMenu = new JMenu("Update Activity");
+			      UpdateMenu.setForeground(Color.WHITE);
 			     
 			      menuBar.add(ActivityMenu);
 //			      menuBar.add(upcomingMenu);

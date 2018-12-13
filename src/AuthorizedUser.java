@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -41,6 +42,7 @@ public class AuthorizedUser {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	
 	
@@ -54,6 +56,7 @@ public class AuthorizedUser {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 192, 203));
 		//frame.setBounds(100, 100, 450, 300);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -163,15 +166,23 @@ public class AuthorizedUser {
 		
 
 		JMenuBar menuBar = new JMenuBar();
+		//menuBar.setForeground(Color.WHITE);
+		menuBar.setBackground(Color.BLACK);
+		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
-//				      //create menus
-				      JMenu ActivityMenu = new JMenu(" Activity");
-//				      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
-//				      final JMenu pastMenu = new JMenu("Past Activity");
-				       JMenu ParticipantMenu = new JMenu("My account");
-				       JMenu AddMenu = new JMenu("Add Activity");
-				       JMenu JudgeMenu = new JMenu("Judge Portal");
-				       JMenu UpdateMenu = new JMenu("Update Activity");
+//			      //create menus
+			      JMenu ActivityMenu = new JMenu(" Activity");
+			      ActivityMenu.setForeground(Color.WHITE);
+//			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
+//			      final JMenu pastMenu = new JMenu("Past Activity");
+			      final JMenu ParticipantMenu = new JMenu("My account");
+			      ParticipantMenu.setForeground(Color.WHITE);
+			      final JMenu AddMenu = new JMenu("Add Activity");
+			      AddMenu.setForeground(Color.WHITE);
+			      final JMenu JudgeMenu = new JMenu("Judge Portal");
+			      JudgeMenu.setForeground(Color.WHITE);
+			      final JMenu UpdateMenu = new JMenu("Update Activity");
+			      UpdateMenu.setForeground(Color.WHITE);
 				     
 				      menuBar.add(ActivityMenu);
 //				      menuBar.add(upcomingMenu);
