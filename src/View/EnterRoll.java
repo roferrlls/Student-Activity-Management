@@ -1,3 +1,6 @@
+
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -55,24 +58,24 @@ public class EnterRoll {
 	   
 
 	/**
-	 * Launch the application.
-	 */
+	* Launch the application.
+	*/
 	public static void main(String[] args) {
 		
 	}
 
 	/**
-	 * Create the application.
-	 * @wbp.parser.entryPoint
-	 */
+	* Create the application.
+	* @wbp.parser.entryPoint
+	*/
 	public EnterRoll(int id) {
 		Aid = id;
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
-	 */
+	* Initialize the contents of the frame.
+	*/
 	private void initialize() {
 		frame = new JFrame();
 
@@ -81,7 +84,7 @@ public class EnterRoll {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
-		frame.getContentPane().setBackground(new Color(255, 192, 203));
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		//frame.setBounds(100, 100, 800, 800);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,7 +126,7 @@ public class EnterRoll {
 		      
 		      //STEP 4: Execute a query
 		      System.out.println("Creating statement...");
-		      String query = "select column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Activity' ORDER BY ORDINAL_POSITION";
+		      String query = "select distinct column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Activity'";
 		      ResultSet rs1=stmt1.executeQuery(query);
 		      int i=1;
 		      while(rs1.next())
@@ -163,10 +166,10 @@ public class EnterRoll {
 		      
 		}catch(SQLException se){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		      
 		   }finally{
 		      //finally block used to close resources
 		      try{
@@ -178,7 +181,7 @@ public class EnterRoll {
 		         if(conn!=null)
 		            conn.close();
 		      }catch(SQLException se){
-		         se.printStackTrace();
+		       
 		      }//end finally try
 		   }
 		
@@ -199,7 +202,10 @@ public class EnterRoll {
 				      Statement stmt4 = conn.createStatement();
 				      String q2 = "select Seats from Activity where Aid = " + Aid;
 				      ResultSet rs5 = stmt4.executeQuery(q2);
-				      if(!rs5.next()) {
+				      rs5.next();
+				      System.out.println(rs5.getInt(1));
+				      if(rs5.getInt(1) == 0) {
+				    	  		System.out.println("Inside");
 						      String roll = editorPane.getText().toString();
 						      //STEP 4: Execute a query
 						      System.out.println("Creating statement...");
@@ -227,7 +233,7 @@ public class EnterRoll {
 						      {
 						    	  String check = rs.getString("Password");
 						    	  String password = new String(passwordField.getPassword());
-						    	  System.out.println(password);
+						    	  //System.out.println(password);
 						    	  
 						    	  if(check == null || !check.equals(password)) {
 						    		  JOptionPane.showMessageDialog(frame,"Invalid password");
@@ -262,7 +268,7 @@ public class EnterRoll {
 				    		  seat--;
 				    		  String roll = editorPane.getText().toString();
 						      //STEP 4: Execute a query
-						      System.out.println("Creating statement...");
+						     // System.out.println("Creating statement...");
 						      String query = "select * from Participant where Pid = "  + "?";
 						      stmt = conn.prepareStatement(query);
 						      
@@ -287,7 +293,7 @@ public class EnterRoll {
 						      {
 						    	  String check = rs.getString("Password");
 						    	  String password = new String(passwordField.getPassword());
-						    	  System.out.println(password);
+//						    	  System.out.println(password);
 						    	  
 						    	  if(check == null || !check.equals(password)) {
 						    		  JOptionPane.showMessageDialog(frame,"Invalid password");
@@ -356,7 +362,7 @@ public class EnterRoll {
 		
 
 		JLabel lblRequirements = new JLabel("OTHER REQUIREMENTS");
-		lblRequirements.setBounds(27, 195, 122, 15);
+		lblRequirements.setBounds(27, 195, 209, 15);
 		frame.getContentPane().add(lblRequirements);
 		
 		
@@ -372,22 +378,15 @@ public class EnterRoll {
 	
 		
 		final JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(Color.BLACK);
-		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
 //			      //create menus
 			      JMenu ActivityMenu = new JMenu(" Activity");
-			      ActivityMenu.setForeground(Color.WHITE);
 //			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
 //			      final JMenu pastMenu = new JMenu("Past Activity");
 			      final JMenu ParticipantMenu = new JMenu("My account");
-			      ParticipantMenu.setForeground(Color.WHITE);
 			      final JMenu AddMenu = new JMenu("Add Activity");
-			      AddMenu.setForeground(Color.WHITE);
 			      final JMenu JudgeMenu = new JMenu("Judge Portal");
-			      JudgeMenu.setForeground(Color.WHITE);
 			      final JMenu UpdateMenu = new JMenu("Update Activity");
-			      UpdateMenu.setForeground(Color.WHITE);
 			     
 			      menuBar.add(ActivityMenu);
 //			      menuBar.add(upcomingMenu);
@@ -441,7 +440,7 @@ public class EnterRoll {
 	}
 	
 	
-	 class MenuItemListener implements ActionListener {
+	class MenuItemListener implements ActionListener {
 	      public void actionPerformed(ActionEvent e) {    
 	    	  if(e.getActionCommand().equals("Current Activity")){
 		    	  EventQueue.invokeLater(new Runnable() {

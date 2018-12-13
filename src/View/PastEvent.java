@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -24,7 +26,7 @@ import java.awt.Color;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,6 +35,7 @@ import java.awt.Dimension;
 public class PastEvent {
 
 	public JFrame frame;
+	Boolean flag=false;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
@@ -87,79 +90,30 @@ public class PastEvent {
 			      System.out.println("Connecting to database...");
 			      conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-
-// 		      //STEP 4: Execute a query
-// 		      System.out.println("Creating statement...");
-// 		      stmt = conn.createStatement();
-// 		      String sql;
-// 		      sql = "SELECT * from Activity where Date < CURDATE()";
-// 		      ResultSet rs = stmt.executeQuery(sql);
-// 		      while(rs.next()){
-// 			         //Retrieve by column name
-// 			        String name = rs.getString("Name");
-// 			        int id = rs.getInt("Aid");
-// 			         System.out.println( id);
-// 			         String str = "(" + id + ")" + " " + name;
-// 			         l1.addElement(str);
-			       
-// 			      }
-// 		      rs.close();
-// 		      stmt.close();
-// 		      conn.close();
-// 		   }catch(SQLException se){
-// 		      //Handle errors for JDBC
-// 		      se.printStackTrace();
-// 		   }catch(Exception e){
-// 		      //Handle errors for Class.forName
-// 		      e.printStackTrace();
-// 		   }finally{
-// 		      //finally block used to close resources
-// 		      try{
-// 		         if(stmt!=null)
-// 		            stmt.close();
-// 		      }catch(SQLException se2){
-// 		      }// nothing we can do
-// 		      try{
-// 		         if(conn!=null)
-// 		            conn.close();
-// 		      }catch(SQLException se){
-// 		         se.printStackTrace();
-// 		      }//end finally try
-// 		   }
-//         JList<String> list = new JList<>(l1);  
-//         list.setBackground(new Color(255, 250, 205));
-//         list.setBounds(12,34, 721,510);  
-//         frame.getContentPane().add(list);  
-// 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-// 		frame.getContentPane().setLayout(null);
-		
-// 		JButton btnViewDetails = new JButton("VIEW DETAILS");
-// 		btnViewDetails.setBackground(new Color(135, 206, 235));
-// 		btnViewDetails.addActionListener(new ActionListener() {
-// 			public void actionPerformed(ActionEvent arg0) {
-// 				EventQueue.invokeLater(new Runnable() {
-// 					public void run() {
-// 						try {
-// 							String dest= list.getSelectedValue();
-// 							String id = "";
-// 							int i =1;
-// 							while(dest.charAt(i) != ')') {
-// 								id += dest.charAt(i);
-// 								i++;
-
 			      //STEP 4: Execute a query
 			      System.out.println("Creating statement...");
 			      stmt = conn.createStatement();
 			      String sql;
 			      sql = "SELECT * from Activity where Date < CURDATE()";
 			      ResultSet rs = stmt.executeQuery(sql);
-			      while(rs.next()){
+			      
+			      Boolean v=rs.next();
+			      if(!v)
+			      {
+			    	  flag=true;
+			    	
+			    	   
+			    	//  return;
+			      }
+			      
+			      while(v){
 				         //Retrieve by column name
 				        String name = rs.getString("Name");
 				        int id = rs.getInt("Aid");
 				         System.out.println( id);
 				         String str = "(" + id + ")" + " " + name;
 				         l1.addElement(str);
+				         v=rs.next();
 				       
 				      }
 			      rs.close();
@@ -326,6 +280,11 @@ public class PastEvent {
 				      ActivityMenuItem3.setActionCommand("Login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
+				      
+				      if(flag)
+				      {
+				    	  JOptionPane.showMessageDialog(frame,"There Are no Past Activities"); 
+				      }
 		}
 
 	

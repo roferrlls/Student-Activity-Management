@@ -1,3 +1,5 @@
+package View;
+
 import java.util.Date;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +22,8 @@ import javax.swing.SpinnerDateModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import dbAccess.addActivityController;
+import Model.Activity;
 
 import javax.swing.JTextField;
 import javax.swing.JEditorPane;
@@ -331,66 +335,14 @@ public class addActivity {
 				if(dept.length() == 0) {
 					dept="";  
 				}
-				try{
-				      //STEP 2: Register JDBC driver
-				      Class.forName("com.mysql.jdbc.Driver");
-
-				      //STEP 3: Open a connection
-				      System.out.println("Connecting to database...");
-				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-				      //STEP 4: Execute a query
-				      System.out.println("Creating statement...");
-				      String s= "select Aid from Activity";
-				      stmt1 = conn.createStatement();
-				      ResultSet rs = stmt1.executeQuery(s);
-				      while(rs.next()) {
-				    	  id++;
-				      }
-				      
-				      System.out.println(id);
-				      String query = "insert into Activity (name,time,date,venue,description,Expected_Audience,Contact_Details,Club,Department,Deadline)" + " values(?,?,?,?,?,?,?,?,?,?)";
-				      stmt = conn.prepareStatement(query);
-				      
-				      stmt.setString(1, name);
-				      stmt.setString(2, time);
-				      stmt.setString(3, date);
-				      stmt.setString(4, venue);
-				      stmt.setString(5, description);
-				      stmt.setString(6, exaud);
-				      stmt.setInt(7,contact);
-				      stmt.setString(8, club);
-				      stmt.setString(9, dept);
-				      stmt.setString(10, ddate);
-				      stmt.execute();
-				      int casee = id + 1;
-				      query = "insert into AddAct values(" + casee + ", '" + uid +"' " + ")";
-				      stmt1.executeUpdate(query);
-				      stmt.close();
-				      conn.close();
-				   }catch(SQLException se){
-				      //Handle errors for JDBC
-				      se.printStackTrace();
-				   }catch(Exception e){
-				      //Handle errors for Class.forName
-				      e.printStackTrace();
-				   }finally{
-				      //finally block used to close resources
-				      try{
-				         if(stmt!=null) {
-				            stmt.close();
-				            stmt1.close();
-				         }   
-				         	
-				      }catch(SQLException se2){
-				      }// nothing we can do
-				      try{
-				         if(conn!=null)
-				            conn.close();
-				      }catch(SQLException se){
-				         se.printStackTrace();
-				      }//end finally try
-				   }
+				if(ddate.length() == 0) {
+					JOptionPane.showMessageDialog(frame,"Deadline field is empty");  
+					return;
+				}
+				Activity activity =new Activity(name,time, date, venue, description, exaud, club,
+		     			dept, value, ddate);
+				addActivityController.insertDetails(activity, uid);
+				
 				
 				EventQueue.invokeLater(new Runnable() {
 						public void run() {
