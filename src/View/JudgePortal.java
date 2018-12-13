@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 import java.awt.Dimension;
+import javax.swing.JPasswordField;
 
 
 public class JudgePortal {
@@ -35,6 +38,7 @@ public class JudgePortal {
 	   static final String PASS = "lnmiit";
 	   Connection conn = null;
 	   PreparedStatement stmt = null;
+	   private JPasswordField passwordField;
 	   
 	   
 	/**
@@ -84,9 +88,9 @@ public class JudgePortal {
 		lblPassword.setBounds(47, 95, 70, 15);
 		frame.getContentPane().add(lblPassword);
 		
-		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(199, 89, 201, 21);
-		frame.getContentPane().add(editorPane_1);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(199, 91, 201, 19);
+		frame.getContentPane().add(passwordField);
 		
 		JButton btnSubmit = new JButton("SUBMIT");
 		btnSubmit.setBackground(new Color(135, 206, 235));
@@ -101,7 +105,7 @@ public class JudgePortal {
 				      System.out.println("Connecting to database...");
 				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
 				      String email = editorPane.getText().toString();
-				      String Password = editorPane_1.getText().toString();
+				      //String Password = editorPane_1.getText().toString();
 				      //STEP 4: Execute a query
 				      String query = "select Password from Judge where Email = "  + "?";
 				      stmt = conn.prepareStatement(query);
@@ -109,17 +113,27 @@ public class JudgePortal {
 				      stmt.setString(1, email);
 				      ResultSet rs = stmt.executeQuery();
 				      String val;
-				      Boolean k=rs.next();
-				      val=rs.getString("Password");
-				      if(!k) {
+				      String Password = new String(passwordField.getPassword());
+				      
+				      if(!rs.next()) {
 				    	  
 				    	  JOptionPane.showMessageDialog(frame,"You are not registered as Judge");
 				    	  System.out.println("HI");
+				    	  editorPane.setText("");
+				    	  passwordField.setText("");
+				    	  //editorPane_1.setText("");
+				    	  return;
 				      }
-				      else if(!Password.equals(val))
+				      val=rs.getString("Password");
+				      if(!Password.equals(val))
 				      {
+				    	  
 				    	  JOptionPane.showMessageDialog(frame,"Wrong User Name or Password");
 				    	  System.out.println("HI");
+				    	  editorPane.setText("");
+				    	  passwordField.setText("");
+				    	  //editorPane_1.setText("");
+				    	  return;
 				      }
 				      else {
 				    	  EventQueue.invokeLater(new Runnable() {
@@ -161,6 +175,8 @@ public class JudgePortal {
 		});	
 		btnSubmit.setBounds(112, 137, 117, 25);
 		frame.getContentPane().add(btnSubmit);
+		
+
 		
 
 		

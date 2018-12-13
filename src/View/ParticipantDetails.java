@@ -1,37 +1,53 @@
-import java.awt.Color;
-import java.awt.Dimension;
+package View;
+
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JEditorPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import javax.swing.JTextPane;
+
+import dbAccess.PartcipantFormController;
+import Model.Participant;
+
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
-public class AuthorizedUser {
+public class ParticipantDetails {
 
-	public JFrame frame;
-	public int flag;
-	String uid;
+	JFrame frame;
+	public String Pid;
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
+
+	   //  Database credentials
+
 	   static final String USER = "kritika";
 	   static final String PASS = "lnmiit";
+
 	   Connection conn = null;
-	   Statement stmt = null;
-	   PreparedStatement stmt1 = null;
+	   PreparedStatement stmt = null;
 
 	/**
 	 * Launch the application.
@@ -44,10 +60,8 @@ public class AuthorizedUser {
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	
-	
-	public AuthorizedUser(int val) {
-		flag = val;
+	public ParticipantDetails(String Pid) {
+		this.Pid=Pid;
 		initialize();
 	}
 
@@ -57,132 +71,109 @@ public class AuthorizedUser {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 192, 203));
-		//frame.setBounds(100, 100, 450, 300);
-		
+		frame.setBackground(new Color(255, 192, 203));
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
-		
+		//frame.setBounds(700, 700, 700, 700);
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblRollno = new JLabel("USER ID");
-		lblRollno.setBounds(37, 30, 70, 15);
-		frame.getContentPane().add(lblRollno);
+		JLabel lblName = new JLabel("NAME");
+		lblName.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblName.setBounds(77, 110, 95, 36);
+		frame.getContentPane().add(lblName);
 		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(37, 96, 70, 15);
-		frame.getContentPane().add(lblPassword);
+		JLabel lblPhoneNumber = new JLabel("PHONE NUMBER");
+		lblPhoneNumber.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblPhoneNumber.setBounds(77, 158, 139, 33);
+		frame.getContentPane().add(lblPhoneNumber);
 		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(201, 24, 106, 21);
-		frame.getContentPane().add(editorPane);
+		JLabel lblBatch = new JLabel("BATCH");
+		lblBatch.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblBatch.setBounds(77, 255, 125, 51);
+		frame.getContentPane().add(lblBatch);
 		
-		JEditorPane editorPane_1 = new JEditorPane();
-		editorPane_1.setBounds(201, 90, 106, 21);
-		frame.getContentPane().add(editorPane_1);
+		JLabel lblEmail = new JLabel("EMAIL");
+		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblEmail.setBounds(77, 203, 105, 40);
+		frame.getContentPane().add(lblEmail);
 		
-		JButton btnSubmit = new JButton("LOGIN");
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String roll = editorPane.getText().toString();
-				uid = roll;
-				String password = editorPane_1.getText().toString();
-				String rpassword = "";
-				try{
-				      //STEP 2: Register JDBC driver
-				      Class.forName("com.mysql.jdbc.Driver");
+		JLabel lbldisName = new JLabel("New label");
 
-				      //STEP 3: Open a connection
-				      System.out.println("Connecting to database...");
-				      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-				      stmt = conn.createStatement();
+		lbldisName.setFont(new Font("Serif", Font.BOLD, 15));
 
-				      //STEP 4: Execute a query
-				      System.out.println("Creating statement...");
-				      String sql;
-				      sql = "select password from AuthorizedUser where Uid = '" + roll+"'";
-				      ResultSet rs = stmt.executeQuery(sql);
-				      while(rs.next()) {
-				    	 rpassword = rs.getString(1);
-				    		  
-				      }
-				      stmt.close();
-				      conn.close();
-				   }catch(SQLException se){
-				      //Handle errors for JDBC
-				      se.printStackTrace();
-				   }catch(Exception ee){
-				      //Handle errors for Class.forName
-				      ee.printStackTrace();
-				   }finally{
-				      //finally block used to close resources
-				      try{
-				         if(stmt!=null)
-				            stmt.close();
-				      }catch(SQLException se2){
-				      }// nothing we can do
-				      try{
-				         if(conn!=null)
-				            conn.close();
-				      }catch(SQLException se){
-				         se.printStackTrace();
-				      }//end finally try
-				   }
-				if(password.equals(rpassword)) {
-					if(flag == 1) {
-						EventQueue.invokeLater(new Runnable() {
-							public void run() {
-								try {
-									addActivity window = new addActivity(uid);
-									window.frame.setVisible(true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-					}
-					else if(flag == 2) {
-						EventQueue.invokeLater(new Runnable() {
-							public void run() {
-								try {
-									UpdateEventList window = new UpdateEventList(uid);
-									window.frame.setVisible(true);
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						});
-					}
-				}
-				else {
-					JOptionPane.showMessageDialog(frame,"Invalid UserName or password");  
-					return;
-				}
-				
+		lbldisName.setBounds(384, 121, 174, 15);
+		frame.getContentPane().add(lbldisName);
+		
+		JLabel lbldisPhone = new JLabel("New label");
+
+		lbldisPhone.setFont(new Font("Serif", Font.BOLD, 15));
+
+		lbldisPhone.setBounds(384, 167, 174, 15);
+		frame.getContentPane().add(lbldisPhone);
+		
+		JLabel lbldisEmail = new JLabel("New label");
+
+		lbldisEmail.setFont(new Font("Serif", Font.BOLD, 15));
+		lbldisEmail.setBounds(384, 216, 174, 15);
+		frame.getContentPane().add(lbldisEmail);
+		
+		JLabel lbldisBatch = new JLabel("New label");
+		lbldisBatch.setFont(new Font("Serif", Font.BOLD, 15));
+		lbldisBatch.setBounds(384, 273, 174, 15);
+		frame.getContentPane().add(lbldisBatch);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
 			}
 		});
-		btnSubmit.setBounds(120, 173, 187, 25);
-		frame.getContentPane().add(btnSubmit);
+		btnBack.setBounds(264, 423, 117, 25);
+		frame.getContentPane().add(btnBack);
+		
+		Participant pt = PartcipantFormController.getDetails(Pid);
+        lbldisName.setText(pt.getName());
+        lbldisPhone.setText(pt.getContact());
+        lbldisBatch.setText(pt.getBatch());
+        lbldisEmail.setText(pt.getEmail());
+        
 		
 
+
 		JMenuBar menuBar = new JMenuBar();
-		//menuBar.setForeground(Color.WHITE);
-		menuBar.setBackground(Color.BLACK);
-		menuBar.setPreferredSize(new Dimension(0, 50));
 		//
-//			      //create menus
-			      JMenu ActivityMenu = new JMenu(" Activity");
-			      ActivityMenu.setForeground(Color.WHITE);
-//			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
-//			      final JMenu pastMenu = new JMenu("Past Activity");
-			      final JMenu ParticipantMenu = new JMenu("My account");
-			      ParticipantMenu.setForeground(Color.WHITE);
-			      final JMenu AddMenu = new JMenu("Add Activity");
-			      AddMenu.setForeground(Color.WHITE);
-			      final JMenu JudgeMenu = new JMenu("Judge Portal");
-			      JudgeMenu.setForeground(Color.WHITE);
-			      final JMenu UpdateMenu = new JMenu("Update Activity");
-			      UpdateMenu.setForeground(Color.WHITE);
+	      menuBar.setPreferredSize(new Dimension(0, 50));
+	      menuBar.setBounds(new Rectangle(0, 100, 100, 100));
+	      menuBar.setAlignmentY(Component.CENTER_ALIGNMENT);
+		    menuBar.setSize(screenSize.width, screenSize.height);
+
+	    //  menuBar.setBounds(100, 100, 150, 101);
+	      menuBar.setForeground(Color.WHITE);
+	      menuBar.setMargin(new Insets(0, 100, 0, 0));
+	      menuBar.setEnabled(false);
+	      menuBar.setBorderPainted(false);
+	      menuBar.setBackground(Color.BLACK);
+
+	      //create menus
+	      JMenu ActivityMenu = new JMenu(" Activity");
+	      ActivityMenu.setSize(new Dimension(0, 10));
+	      ActivityMenu.setForeground(Color.WHITE);
+//	      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
+//	      final JMenu pastMenu = new JMenu("Past Activity");
+	      JMenu ParticipantMenu = new JMenu("My account");
+	      ParticipantMenu.setBackground(Color.BLACK);
+	      ParticipantMenu.setForeground(Color.WHITE);
+	      final JMenu AddMenu = new JMenu("Add Activity");
+	      AddMenu.setForeground(Color.WHITE);
+	      final JMenu JudgeMenu = new JMenu("Judge Portal");
+	      JudgeMenu.setForeground(Color.WHITE);
+	      final JMenu UpdateMenu = new JMenu("Update Activity");
+	      UpdateMenu.setForeground(Color.WHITE);
+	      final JMenu SignupMenu = new JMenu("Signup");
+	      SignupMenu.setForeground(Color.WHITE);
 				     
 				      menuBar.add(ActivityMenu);
 //				      menuBar.add(upcomingMenu);
@@ -229,10 +220,12 @@ public class AuthorizedUser {
 				      UpdateMenu.add(UpdateMenuItem);
 				      
 				      JMenuItem ActivityMenuItem3 = new JMenuItem("Login");
-				      ActivityMenuItem3.setActionCommand("login");
+				      ActivityMenuItem3.setActionCommand("Login");
 				      ActivityMenuItem3.addActionListener(menuItemListener);
 				      ParticipantMenu.add(ActivityMenuItem3);
+		
 	}
+
 	
 	   
 	   class MenuItemListener implements ActionListener {
@@ -314,7 +307,7 @@ public class AuthorizedUser {
 						});
 		    	  }
 		    	  
-		    	  else if(e.getActionCommand().equals("login")){
+		    	  else if(e.getActionCommand().equals("Login")){
 		    		  EventQueue.invokeLater(new Runnable() {
 		    				public void run() {
 		    					try {
@@ -329,6 +322,5 @@ public class AuthorizedUser {
 		      
 		      }        
 		   }
-	
-	
+
 }
