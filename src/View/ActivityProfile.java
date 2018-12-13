@@ -1,6 +1,9 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,34 +24,23 @@ import javax.swing.JMenuItem;
 
 import javax.swing.JTextPane;
 
+import dbAccess.ActivityProfileController;
+import Model.Activity;
 
 import javax.swing.JTextArea;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-
-
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Scrollbar;
-import javax.swing.UIManager;
-
 
 public class ActivityProfile {
 
 	public JFrame frame;
 	public int flag;
 	public  int id;
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:mysql://localhost/s";
-
-	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
-	   Connection conn = null;
-	   PreparedStatement stmt = null;
-	   Statement st=null;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +66,7 @@ public class ActivityProfile {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    frame.setSize(screenSize.width, screenSize.height);
-		frame.getContentPane().setBackground(new Color(255, 228, 225));
+		frame.getContentPane().setBackground(new Color(255, 192, 203));
 		//frame.setBounds(100, 100, 800, 800);
 
 		
@@ -95,8 +87,6 @@ public class ActivityProfile {
 		lblDateyyyytimeDd.setFont(new Font("Serif", Font.PLAIN, 14));
 		lblDateyyyytimeDd.setBounds(48, 188, 208, 28);
 		frame.getContentPane().add(lblDateyyyytimeDd);
-		
-
 		
 		JLabel lblVenue = new JLabel("VENUE");
 		lblVenue.setFont(new Font("Serif", Font.PLAIN, 14));
@@ -129,13 +119,18 @@ public class ActivityProfile {
 	      lblDeadline.setFont(new Font("Serif", Font.PLAIN, 14));
 	      lblDeadline.setBounds(47, 516, 123, 15);
 	      frame.getContentPane().add(lblDeadline);
+	      
+	      
+
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(443, 61, 265, 30);
+		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel label = new JLabel("New label");
 		label.setBounds(443, 121, 265, 30);
 		frame.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("New label");
-		label_1.setBackground(new Color(255, 228, 225));
 		label_1.setBounds(443, 176, 265, 30);
 		frame.getContentPane().add(label_1);
 		
@@ -164,20 +159,6 @@ public class ActivityProfile {
 	      lbldeadline.setBounds(443, 522, 123, 15);
 	      frame.getContentPane().add(lbldeadline);
 		
-	      JLabel lblNewLabel = new JLabel("New label");
-	      lblNewLabel.setBounds(447, 76, 181, 15);
-	      frame.getContentPane().add(lblNewLabel);
-
-		JButton btnBack = new JButton("BACK");
-		btnBack.setBackground(new Color(135, 206, 235));
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
-		btnBack.setBounds(257, 710, 212, 25);
-		frame.getContentPane().add(btnBack);
-		
 		JButton btnNewButton_1 = new JButton("Show Result");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -194,17 +175,31 @@ public class ActivityProfile {
 			}
 		});
 
-		btnNewButton_1.setBounds(257, 549, 208, 25);
+		btnNewButton_1.setBounds(300, 554, 212, 25);
 
 			if(flag == 2)
 			frame.getContentPane().add(btnNewButton_1);
-		
+			
+//			JButton btnNewButton_2 = new JButton("Show Participant");
+//			btnNewButton_2.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent arg0) {
+//				}
+//			});
+//			btnNewButton_2.setBounds(257, 628, 208, 25);
+//			frame.getContentPane().add(btnNewButton_2);
+//			JButton btnNewButton_2 = new JButton("Show Participants");
+//			btnNewButton_2.setBackground(new Color(135, 206, 235));
+//			btnNewButton_2.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent arg0) {
+//					
+//				}
+//			});
+			
 			
 			
 			
 			
 			JButton btnNewButton_2 = new JButton("Show Participants");
-			btnNewButton_2.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					EventQueue.invokeLater(new Runnable() {
@@ -219,7 +214,7 @@ public class ActivityProfile {
 					});
 				}
 			});
-			btnNewButton_2.setBounds(257, 586, 208, 25);
+			btnNewButton_2.setBounds(7, 554, 212, 25);
 			frame.getContentPane().add(btnNewButton_2);
 			
 			
@@ -241,7 +236,7 @@ public class ActivityProfile {
 					});
 				}
 			});
-			btnNewButton_3.setBounds(257, 654, 212, 25);
+			btnNewButton_3.setBounds(857, 554, 212, 25);
 			if(flag == 2)
 				frame.getContentPane().add(btnNewButton_3);
 		
@@ -249,253 +244,89 @@ public class ActivityProfile {
 		JButton btnNewButton = new JButton("Register");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							//STEP 2: Register JDBC driver
-						      Class.forName("com.mysql.jdbc.Driver");
-
-						      //STEP 3: Open a connection
-						      System.out.println("Connecting to database...");
-						      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-						      //STEP 4: Execute a query
-						      System.out.println("Creating statement...");
-							String sql="select * from Activity where Aid = "+id;
-							st=conn.createStatement();
-							ResultSet rs=st.executeQuery(sql);
-							rs.next();
-							Date dt=rs.getDate("Deadline");
-							Date currd=new Date();
-							System.out.println(dt);
-
-							System.out.println(currd);
-							if(currd.after(dt))
-							{
-								JOptionPane.showMessageDialog(frame,"Registrations Closed!");  
-
-							}
-							else
-							{	
-								EnterRoll window = new EnterRoll(id);
-								window.frame.setVisible(true);
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
+				ActivityProfileController.checkForDeadLine(frame, id);
 			}
 		});
-		btnNewButton.setBounds(257, 639, 212, 28);
+		btnNewButton.setBounds( 600, 576, 200, 25);
 		if(flag  == 1) 
 			frame.getContentPane().add(btnNewButton);
 			
 			
 		//}	
-		try{
-		      //STEP 2: Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
-		      String query = "select * from Activity where Aid = "  + "?";
-		      stmt = conn.prepareStatement(query);
-		      
-		      stmt.setInt(1, id);
-		      ResultSet rs = stmt.executeQuery();
-		      while(rs.next()){
+		
+			  Activity rs = ActivityProfileController.getDetails(id);
+		     
 			         //Retrieve by column name
 		    	  	 
-			         String name = rs.getString("Name");
-			         String venue = rs.getString("Venue");
-			         String date=rs.getString("Date");
-			         String time=rs.getString("Time");
-			         String ex_aud=rs.getString("Expected_Audience");
-			         String contact=rs.getString("Contact_Details");
-			         String desc=rs.getString("Description");
-			         String deadl = rs.getString("Deadline");
-			         lblNewLabel.setText(name);
-			         label.setText(date);
-			         label_1.setText(time);
-			         label_2.setText(venue);
-			         label_3.setText(ex_aud);
-			         label_4.setText(contact);
-			         label_5.setText(desc);
+			        
+			        
+			         lblNewLabel.setText(rs.getName());
+			         label.setText(rs.getDate());
+			         label_1.setText(rs.getTime());
+			         label_2.setText(rs.getVenue());
+			         label_3.setText(rs.getEx_aud());
+			         label_4.setText(rs.getContact());
+			         label_5.setText(rs.getDescription());
 
-			         lbldeadline.setText(deadl);
-			         if(deadl == null) {
+			         lbldeadline.setText(rs.getDeadline());
+			         if(rs.getDeadline() == null) {
 			        	 lbldeadline.setText("No Deadline");
 			         }
-			  }
+			  
+		
 		      
-		      stmt.close();
-		      conn.close();
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }//end finally try
-		   }
+		     
 		
 		
 		
 		
 		//calculating rating now
-		try{
-		      //STEP 2: Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
-		      String query = "select Rating from Enrolls where Aid = "  + "?";
-		      stmt = conn.prepareStatement(query);
-		      
-		      stmt.setInt(1, id);
-		      ResultSet rs = stmt.executeQuery();
-		      float calcRating = 0;
-		      int cnt = 0;
-		      while(rs.next()){
-		    	  int temp = rs.getInt("Rating");
-			      	 calcRating  += temp;
-			      	 if(temp != 0) {
-			      		 cnt++;
-			      	 }
-
-			  }
+		      String val = ActivityProfileController.getRating(id); 
 //		      System.out.println("Rating = " + calcRating);
 //		      System.out.println("Count = " + cnt);
-		      label_6.setText(Float.toString(calcRating/cnt));
+		      label_6.setText(val);
 		      
+		      JButton btnBack = new JButton("BACK");
+		      btnBack.addActionListener(new ActionListener() {
+		      	public void actionPerformed(ActionEvent e) {
+		      		frame.dispose();
+		      	}
+		      });
+		      btnBack.setBounds(1100, 554, 212, 25);
+		      frame.getContentPane().add(btnBack);
 		      
-		      stmt.close();
-		      conn.close();
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }//end finally try
-		   }
-
-	//}
-	
-
-		
-		
-		
-		
-		//calculating rating now
-		try{
-		      //STEP 2: Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-		      //STEP 4: Execute a query
-		      System.out.println("Creating statement...");
-		      String query = "select Rating from Enrolls where Aid = "  + "?";
-		      stmt = conn.prepareStatement(query);
-		      
-		      stmt.setInt(1, id);
-		      ResultSet rs = stmt.executeQuery();
-		      float calcRating = 0;
-		      int cnt = 0;
-		      while(rs.next()){
-		    	  int temp = rs.getInt("Rating");
-			      	 calcRating  += temp;
-			      	 if(temp != 0) {
-			      		 cnt++;
-			      	 }
-			  }
-//		      System.out.println("Rating = " + calcRating);
-//		      System.out.println("Count = " + cnt);
-		      label_6.setText(Float.toString(calcRating/cnt));
-
-		      
-		      Scrollbar scrollbar = new Scrollbar();
-		      scrollbar.setBounds(1290, 0, 17, 690);
-		      frame.getContentPane().add(scrollbar);
-		      
-		      
-		      stmt.close();
-		      conn.close();
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }//end finally try
-		   }
-		
+//		
 		final JMenuBar menuBar = new JMenuBar();
-		menuBar.setForeground(Color.WHITE);
-		menuBar.setBackground(Color.BLACK);
-		menuBar.setPreferredSize(new Dimension(0, 50));
-		//
-//			      //create menus
-			      JMenu ActivityMenu = new JMenu(" Activity");
-			      ActivityMenu.setForeground(Color.WHITE);
-//			      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
-//			      final JMenu pastMenu = new JMenu("Past Activity");
-			      final JMenu ParticipantMenu = new JMenu("My account");
-			      ParticipantMenu.setForeground(Color.WHITE);
-			      final JMenu AddMenu = new JMenu("Add Activity");
-			      AddMenu.setForeground(Color.WHITE);
-			      final JMenu JudgeMenu = new JMenu("Judge Portal");
-			      JudgeMenu.setForeground(Color.WHITE);
-			      final JMenu UpdateMenu = new JMenu("Update Activity");
-			      UpdateMenu.setForeground(Color.WHITE);
+	      menuBar.setPreferredSize(new Dimension(0, 50));
+	      menuBar.setBounds(new Rectangle(0, 100, 100, 100));
+	      menuBar.setAlignmentY(Component.CENTER_ALIGNMENT);
+		    menuBar.setSize(screenSize.width, screenSize.height);
+
+	    //  menuBar.setBounds(100, 100, 150, 101);
+	      menuBar.setForeground(Color.WHITE);
+	      menuBar.setMargin(new Insets(0, 100, 0, 0));
+	      menuBar.setEnabled(false);
+	      menuBar.setBorderPainted(false);
+	      menuBar.setBackground(Color.BLACK);
+
+	      //create menus
+	      JMenu ActivityMenu = new JMenu(" Activity");
+	      ActivityMenu.setSize(new Dimension(0, 10));
+	      ActivityMenu.setForeground(Color.WHITE);
+//	      JMenu upcomingMenu = new JMenu("Upcoming Activity"); 
+//	      final JMenu pastMenu = new JMenu("Past Activity");
+	      JMenu ParticipantMenu = new JMenu("My account");
+	      ParticipantMenu.setBackground(Color.BLACK);
+	      ParticipantMenu.setForeground(Color.WHITE);
+	      final JMenu AddMenu = new JMenu("Add Activity");
+	      AddMenu.setForeground(Color.WHITE);
+	      final JMenu JudgeMenu = new JMenu("Judge Portal");
+	      JudgeMenu.setForeground(Color.WHITE);
+	      final JMenu UpdateMenu = new JMenu("Update Activity");
+	      UpdateMenu.setForeground(Color.WHITE);
+	      final JMenu SignupMenu = new JMenu("Signup");
+	      SignupMenu.setForeground(Color.WHITE);
+	     
 			     
 			      menuBar.add(ActivityMenu);
 //			      menuBar.add(upcomingMenu);
