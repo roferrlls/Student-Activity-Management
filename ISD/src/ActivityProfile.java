@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class ActivityProfile {
 
@@ -52,6 +53,7 @@ public class ActivityProfile {
 	 */
 	private void initialize() {
 		frame = new JFrame("ActivityProfile");
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		frame.setBounds(100, 100, 800, 800);
 		
 		JLabel lblName = new JLabel("NAME");
@@ -94,6 +96,11 @@ public class ActivityProfile {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JLabel lblRating = new JLabel("RATING");
+		lblRating.setFont(new Font("Serif", Font.PLAIN, 14));
+		lblRating.setBounds(47, 475, 70, 15);
+		frame.getContentPane().add(lblRating);
+		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(443, 61, 265, 30);
 		frame.getContentPane().add(lblNewLabel);
@@ -122,13 +129,18 @@ public class ActivityProfile {
 		label_5.setBounds(443, 122, 305, 592);
 		frame.getContentPane().add(label_5);
 		
+		JLabel label_6 = new JLabel("New label");
+		label_6.setBounds(443, 475, 70, 15);
+		frame.getContentPane().add(label_6);
+		
 		JButton btnBack = new JButton("BACK");
+		btnBack.setBackground(new Color(135, 206, 235));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
-		btnBack.setBounds(257, 710, 219, 25);
+		btnBack.setBounds(257, 710, 212, 25);
 		frame.getContentPane().add(btnBack);
 		
 		JButton btnNewButton_1 = new JButton("Show Result");
@@ -146,17 +158,69 @@ public class ActivityProfile {
 				});
 			}
 		});
-		btnNewButton_1.setBounds(257, 567, 208, 25);
-			if(flag != 0)
+		btnNewButton_1.setBounds(257, 526, 208, 25);
+			if(flag == 2)
 			frame.getContentPane().add(btnNewButton_1);
 			
-			JButton btnNewButton_2 = new JButton("Show Participant");
+//			JButton btnNewButton_2 = new JButton("Show Participant");
+//			btnNewButton_2.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent arg0) {
+//				}
+//			});
+//			btnNewButton_2.setBounds(257, 628, 208, 25);
+//			frame.getContentPane().add(btnNewButton_2);
+//			JButton btnNewButton_2 = new JButton("Show Participants");
+//			btnNewButton_2.setBackground(new Color(135, 206, 235));
+//			btnNewButton_2.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent arg0) {
+//					
+//				}
+//			});
+			
+			
+			
+			
+			
+			JButton btnNewButton_2 = new JButton("Show Participants");
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								ParticipantList window = new ParticipantList(id);
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 				}
 			});
-			btnNewButton_2.setBounds(257, 628, 208, 25);
+			btnNewButton_2.setBounds(257, 586, 208, 25);
 			frame.getContentPane().add(btnNewButton_2);
+			
+			
+			
+			
+			
+			JButton btnNewButton_3 = new JButton("Rate Activity");
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								RateActivity window = new RateActivity(id);
+								window.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			});
+			btnNewButton_3.setBounds(257, 654, 212, 25);
+			if(flag == 2)
+				frame.getContentPane().add(btnNewButton_3);
 		
 		
 		JButton btnNewButton = new JButton("Register");
@@ -174,10 +238,12 @@ public class ActivityProfile {
 				});
 			}
 		});
-		btnNewButton.setBounds(47, 601, 645, 66);
-		if(flag  == 1) {
+		btnNewButton.setBounds(257, 639, 212, 28);
+		if(flag  == 1) 
 			frame.getContentPane().add(btnNewButton);
-		}	
+			
+			
+		//}	
 		try{
 		      //STEP 2: Register JDBC driver
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -210,7 +276,7 @@ public class ActivityProfile {
 			         label_3.setText(ex_aud);
 			         label_4.setText(contact);
 			         label_5.setText(desc);
-			       
+			         
 			  }
 		      
 		      stmt.close();
@@ -235,5 +301,65 @@ public class ActivityProfile {
 		         se.printStackTrace();
 		      }//end finally try
 		   }
+		
+		
+		
+		
+		//calculating rating now
+		try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		      System.out.println("Connecting to database...");
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+		      //STEP 4: Execute a query
+		      System.out.println("Creating statement...");
+		      String query = "select Rating from Enrolls where Aid = "  + "?";
+		      stmt = conn.prepareStatement(query);
+		      
+		      stmt.setInt(1, id);
+		      ResultSet rs = stmt.executeQuery();
+		      float calcRating = 0;
+		      int cnt = 0;
+		      while(rs.next()){
+		    	  int temp = rs.getInt("Rating");
+			      	 calcRating  += temp;
+			      	 if(temp != 0) {
+			      		 cnt++;
+			      	 }
+			  }
+//		      System.out.println("Rating = " + calcRating);
+//		      System.out.println("Count = " + cnt);
+		      label_6.setText(Float.toString(calcRating/cnt));
+		      stmt.close();
+		      conn.close();
+		   }catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   }catch(Exception e){
+		      //Handle errors for Class.forName
+		      e.printStackTrace();
+		   }finally{
+		      //finally block used to close resources
+		      try{
+		         if(stmt!=null)
+		            stmt.close();
+		      }catch(SQLException se2){
+		      }// nothing we can do
+		      try{
+		         if(conn!=null)
+		            conn.close();
+		      }catch(SQLException se){
+		         se.printStackTrace();
+		      }//end finally try
+		   }
+
 	}
+	
+	
+	
+	
+	
 }

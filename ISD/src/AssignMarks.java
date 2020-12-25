@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class AssignMarks {
 
@@ -49,6 +50,7 @@ public class AssignMarks {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -115,6 +117,7 @@ public class AssignMarks {
 		frame.getContentPane().add(editorPane);
 		
 		JButton btnSubmitScore = new JButton("SUBMIT SCORE");
+		btnSubmitScore.setBackground(new Color(135, 206, 235));
 		btnSubmitScore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -170,6 +173,7 @@ public class AssignMarks {
 		frame.getContentPane().add(btnSubmitScore);
 		
 		JButton btnDone = new JButton("DONE");
+		btnDone.setBackground(new Color(135, 206, 235));
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();

@@ -2,9 +2,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-
-import com.sun.prism.paint.Color;
-
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -13,10 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class testgui {
 
@@ -25,8 +20,8 @@ public class testgui {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 	
@@ -60,6 +55,7 @@ public class testgui {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 240, 245));
 		frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -69,6 +65,7 @@ public class testgui {
 		frame.getContentPane().add(menuItem);
 		
 		Button current = new Button("Current");
+		current.setBackground(new Color(135, 206, 235));
 		current.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -133,6 +130,7 @@ public class testgui {
 		frame.getContentPane().add(current);
 		
 		Button past = new Button("Past");
+		past.setBackground(new Color(135, 206, 235));
 		past.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -196,8 +194,7 @@ public class testgui {
 		frame.getContentPane().add(past);
 		
 		Button Upcoming = new Button("Upcoming");
-		
-		
+		Upcoming.setBackground(new Color(135, 206, 235));
 		Upcoming.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -262,6 +259,7 @@ public class testgui {
 		frame.getContentPane().add(Upcoming);
 		
 		JButton btnAddActivity = new JButton("ADD ACTIVITY");
+		btnAddActivity.setBackground(new Color(135, 206, 235));
 		btnAddActivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -281,6 +279,7 @@ public class testgui {
 		frame.getContentPane().add(btnAddActivity);
 		
 		JButton btnJudgePortal = new JButton("JUDGE PORTAl");
+		btnJudgePortal.setBackground(new Color(135, 206, 235));
 		btnJudgePortal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -299,6 +298,7 @@ public class testgui {
 		frame.getContentPane().add(btnJudgePortal);
 		
 		JButton btnUpdateActivity = new JButton("UPDATE Activity");
+		btnUpdateActivity.setBackground(new Color(135, 206, 235));
 		btnUpdateActivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -316,11 +316,6 @@ public class testgui {
 		});
 		btnUpdateActivity.setBounds(233, 477, 198, 25);
 		frame.getContentPane().add(btnUpdateActivity);
-
-		
-		
-		
-		 
 		
 	}
 }

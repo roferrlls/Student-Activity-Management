@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class SubmitUpdate {
 
@@ -48,6 +49,7 @@ public class SubmitUpdate {
 	 */
 	private void initialize() {
 		frame = new JFrame("ActivityProfile");
+		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		frame.setBounds(100, 100, 800, 800);
 		
 		JLabel lblName = new JLabel("NAME");
@@ -115,7 +117,7 @@ public class SubmitUpdate {
 		frame.getContentPane().add(label_4);
 		
 		JEditorPane label_5 = new JEditorPane();
-		label_5.setBounds(443, 122, 305, 592);
+		label_5.setBounds(443, 409, 265, 157);
 		frame.getContentPane().add(label_5);
 		
 		JButton btnBack = new JButton("BACK");

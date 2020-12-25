@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import java.awt.Color;
 
 public class PastEvent {
 
@@ -19,8 +20,8 @@ public class PastEvent {
 	   static final String DB_URL = "jdbc:mysql://localhost/s";
 
 	   //  Database credentials
-	   static final String USER = "kritika";
-	   static final String PASS = "lnmiit";
+	   static final String USER = "root";
+	   static final String PASS = "root";
 	   Connection conn = null;
 	   Statement stmt = null;
 
@@ -101,12 +102,14 @@ public class PastEvent {
 		      }//end finally try
 		   }
         JList<String> list = new JList<>(l1);  
+        list.setBackground(new Color(255, 250, 205));
         list.setBounds(12,34, 721,510);  
         frame.getContentPane().add(list);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnViewDetails = new JButton("VIEW DETAILS");
+		btnViewDetails.setBackground(new Color(135, 206, 235));
 		btnViewDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EventQueue.invokeLater(new Runnable() {
@@ -133,6 +136,7 @@ public class PastEvent {
 		btnViewDetails.setBounds(204, 625, 273, 43);
 		frame.getContentPane().add(btnViewDetails);
 		JButton btnNewButton = new JButton("BACK");
+		btnNewButton.setBackground(new Color(135, 206, 235));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
